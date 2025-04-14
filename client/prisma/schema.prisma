@@ -31,12 +31,11 @@ model User {
 model DeadPeople {
    id            String     @id @default(uuid())
   fullName      String
-  birthDate     DateTime?
-  deathDate     DateTime?
+   birthYear     Int?     
+  deathYear     Int?   
   biography     String?      
   images        String[]     
-  funeralPlace  String?     
-  funeralDate   DateTime?    
+  funeralPlace  String?       
   createdById   String
   createdBy   User   @relation("UserMemorials", fields: [createdById], references: [id])
   createdAt     DateTime     @default(now())

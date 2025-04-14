@@ -2,8 +2,7 @@
 
 import { toast } from "sonner";
 import { z } from "zod"
-import useFetch from "../../../../../../hooks/use-fetch";
-import { AddMemorialToDB } from "../../../../../../actions/memorials";
+
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
@@ -12,9 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Upload, X } from "lucide-react";
+import { Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import useFetch from "@/hooks/use-fetch";
+import { AddMemorialToDB } from "@/actions/memorials";
+import { useAuth } from "@clerk/nextjs";
+
 
 
 
@@ -23,19 +26,30 @@ export default function MemorialForm () {
     const [imageError, setImageError] = useState("");
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadedImages, setUploadedImages] = useState([]);
-    const [uploadedAiImage, setUploadedAiImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+
+    const { isSignedIn } = useAuth();
 
     const router = useRouter();
     
     const memorialSchema = z.object({
         fullName: z.string().min(1, "სახელის შევსება აუცილებელია"), 
-        birthDate: z.union([z.string().datetime().optional(), z.null()]),
-        deathDate: z.union([z.string().datetime().optional(), z.null()]),
+        birthYear: z
+        .number()
+        .int("წელი უნდა იყოს მთელი რიცხვი")
+        .gte(1900, "წელი უნდა იყოს 1900 ან მეტი")
+        .lte(new Date().getFullYear() + 1, "წელი არ უნდა აღემატებოდეს მიმდინარე წელს")
+        .optional()
+        .or(z.literal(null)),
+      deathYear: z
+        .number()
+        .int("წელი უნდა იყოს მთელი რიცხვი")
+        .gte(1900, "წელი უნდა იყოს 1900 ან მეტი")
+        .lte(new Date().getFullYear() + 1, "წელი არ უნდა აღემატებოდეს მიმდინარე წელს")
+        .optional()
+        .or(z.literal(null)),
         biography: z.string().optional(),
-        images: z.array(z.string().url()).min(1, "სურათი სავალდებულოა"), 
         funeralPlace: z.string().optional(),
-        funeralDate: z.union([z.string().datetime().optional(), z.null()]),
       });
 
 
@@ -104,7 +118,7 @@ export default function MemorialForm () {
           toast.success("მემორიალი შეიქმნა წარმატებით");
           router.push("/memorials");
         }
-    }, [])
+    }, [memorialResult, router])
 
         
     const {
@@ -120,9 +134,38 @@ export default function MemorialForm () {
 
     });
 
+
+    
+
     const removeImage = (index) => {
         setUploadedImages((prev) => prev.filter((_, i) => i !== index));
       };
+
+   
+      const onSubmit = async(data) => {
+
+        if (!isSignedIn) {
+            toast.error("გთხოვთ გაიაროთ ავტორიზაცია");
+            router.push("/sign-in");
+            return;
+          }
+         
+        const memorialData = {
+            ...data,
+            birthYear: data.birthYear ? parseInt(data.birthYear) : null,
+            deathYear: data.deathYear ? parseInt(data.deathYear) : null,
+
+
+        };
+
+        await addMemorial({
+            memorialData,
+            images: uploadedImages
+        });
+       
+
+    
+      }
 
 
     return (
@@ -136,7 +179,7 @@ export default function MemorialForm () {
   </CardHeader>
 
   <CardContent>
-    <form className="space-y-10">
+    <form className="space-y-10" onSubmit={ handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Full Name */}
     <div className="space-y-2">
@@ -153,32 +196,56 @@ export default function MemorialForm () {
     </div>
 
     {/* Birth Date */}
-    <div className="space-y-2">
-      <Label htmlFor="birthDate">დაბადების თარიღი</Label>
-      <Input
-        type="date"
-        id="birthDate"
-        {...register("birthDate")}
-        className={errors.birthDate ? "border-red-500" : ""}
-      />
-      {errors.birthDate && (
-        <p className="text-xs text-red-500">{errors.birthDate.message}</p>
-      )}
-    </div>
+<div className="space-y-2">
+  <Label htmlFor="birthYear">დაბადების წელი</Label>
+  <Input
+    type="number"
+    id="birthYear"
+    {...register('birthYear', {
+        required: "დაბადების წელი აუცილებელია",
+        min: {
+          value: 1900,
+          message: "წელი უნდა იყოს 1900 ან მეტი"
+        },
+        max: {
+          value: new Date().getFullYear() + 1,
+          message: "წელი არ უნდა აღემატებოდეს მიმდინარე წელს"
+        },
+        valueAsNumber: true, 
+      })}
+    placeholder="...შეიყვანეთ წელი (მაგ: 1965)"
+    className={errors.birthYear ? "border-red-500" : ""}
+  />
+  {errors.birthYear && (
+    <p className="text-xs text-red-500">{errors.birthYear.message}</p>
+  )}
+</div>
 
-    {/* Death Date */}
-    <div className="space-y-2">
-      <Label htmlFor="deathDate">გარდაცვალების თარიღი</Label>
-      <Input
-        type="date"
-        id="deathDate"
-        {...register("deathDate")}
-        className={errors.deathDate ? "border-red-500" : ""}
-      />
-      {errors.deathDate && (
-        <p className="text-xs text-red-500">{errors.deathDate.message}</p>
-      )}
-    </div>
+{/* Death Date */}
+<div className="space-y-2">
+  <Label htmlFor="deathYear">გარდაცვალების წელი</Label>
+  <Input
+    type="number"
+    id="deathYear"
+    {...register('deathYear', {
+        required: "გარდაცვალების წელი აუცილებელია",
+        min: {
+          value: 1900,
+          message: "წელი უნდა იყოს 1900 ან მეტი"
+        },
+        max: {
+          value: new Date().getFullYear() + 1,
+          message: "წელი არ უნდა აღემატებოდეს მიმდინარე წელს"
+        },
+        valueAsNumber: true, 
+      })}
+    placeholder="...შეიყვანეთ წელი (მაგ: 1965)"
+    className={errors.deathYear ? "border-red-500" : ""}
+  />
+  {errors.deathYear && (
+    <p className="text-xs text-red-500">{errors.deathYear.message}</p>
+  )}
+</div>
 
     {/* Funeral Place */}
     <div className="space-y-2">
@@ -190,19 +257,6 @@ export default function MemorialForm () {
       />
     </div>
 
-    {/* Funeral Date */}
-    <div className="space-y-2">
-      <Label htmlFor="funeralDate">დასაფლავების თარიღი</Label>
-      <Input
-        type="date"
-        id="funeralDate"
-        {...register("funeralDate")}
-        className={errors.funeralDate ? "border-red-500" : ""}
-      />
-      {errors.funeralDate && (
-        <p className="text-xs text-red-500">{errors.funeralDate.message}</p>
-      )}
-    </div>
 
     {/* Biography */}
     <div className="space-y-2 md:col-span-2 lg:col-span-3">
@@ -274,9 +328,32 @@ export default function MemorialForm () {
                 </Button>
               </div>
             ))}
+
+
           </div>
+
+         
         </div>
       )}
+
+                  <button 
+                  type="submit"
+                  
+                  className="w-full  md:w-auto cursor-pointer "
+                  disabled={memorialLoading}
+                  
+                  
+                  
+                >
+                  {memorialLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      იქმნება მემორიალი...
+                    </>
+                  ) : (
+                    "შექმენი მემორიალი"
+                  )}
+                </button>
     </form>
   </CardContent>
 </Card>
