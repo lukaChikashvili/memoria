@@ -25,7 +25,7 @@ const Header = async ({ isAdminPage = false}) => {
 
             <SignedOut>
                 <SignInButton forceRedirectUrl='/'>
-                  <Button className="btn "><LogIn /> შესვლა</Button>
+                  <Button variant = "outline" className="cursor-pointer"><LogIn /> შესვლა</Button>
                 </SignInButton>
               
             </SignedOut>
