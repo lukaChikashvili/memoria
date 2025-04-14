@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { CirclePlus, Plus } from "lucide-react";
+import { CirclePlus } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -14,9 +15,13 @@ export default function Home() {
           </h2>
 
           <div className="mx-auto max-w-4xl flex items-center justify-center gap-6">
+            <Link href = "/memorials">
           <Button variant="outline" className="cursor-pointer hover:border-yellow"><CirclePlus />დაათვალიერე სასაფლაო</Button>
+          </Link>
+
+          <Link href = "/memorials/create">
             <Button variant="ghost" className="bg-[#FFB22C] cursor-pointer"><CirclePlus /> შექმენი მემორიალი</Button>
-           
+            </Link>
           </div>
 
 
