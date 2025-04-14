@@ -10,7 +10,7 @@ export const metadata = {
 
 const CreateMemorial = () => {
   return (
-    <div>
+    <div className='px-36'>
       create memeorial
       <MemorialForm />
     </div>

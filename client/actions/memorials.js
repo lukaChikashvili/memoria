@@ -87,7 +87,7 @@ export async function AddMemorialToDB({memorialData, images}) {
         }
       });
 
-      revalidatePath('/memorials/posts')
+      revalidatePath('/memorials')
         
     } catch (error) {
         throw new Error("Error adding car:" + error.message);
