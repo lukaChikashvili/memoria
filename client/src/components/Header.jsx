@@ -3,24 +3,29 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import React from 'react'
 import { Button } from './ui/button'
 import { LogIn } from 'lucide-react'
+import logo from '../assets/logo.png'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const Header = async ({ isAdminPage = false}) => {
     
   return (
-    <div>
+    <div className='w-full flex items-center justify-between px-20 h-36'>
         <div>
-            logo
+          <Link href = {isAdminPage ? "/admin" : "/"}>
+            <Image src = {logo} alt = "logo" width = {200} height={200} />
+            </Link>
         </div>
 
         <div>
             <SignedIn>
-              <h1>you are signed in</h1>
+              
               
             </SignedIn>
 
             <SignedOut>
                 <SignInButton forceRedirectUrl='/'>
-                  <Button><LogIn /> sign in</Button>
+                  <Button className="btn "><LogIn /> შესვლა</Button>
                 </SignInButton>
               
             </SignedOut>
