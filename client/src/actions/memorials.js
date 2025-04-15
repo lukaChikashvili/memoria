@@ -3,6 +3,7 @@
 import { checkUser } from "@/lib/checkUser";
 import { db } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase";
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
@@ -101,16 +102,25 @@ export async function AddMemorialToDB({memorialData, images}) {
 
 
 export async function GetMemorials() {
-  const user = await checkUser();
+  const { userId } = await auth();
 
-  
-  if(!user) throw new Error("User not found");
+  if (!userId) throw new Error("Unauthorized");
 
-  const allMemorials = await db.deadPeople.findMany({
-    orderBy: {
-      createdAt: 'desc', 
-    },
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
   });
 
-  return allMemorials;
+  if (!user) throw new Error("User not found");
+  try {
+    const allMemorials = await db.deadPeople.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return allMemorials;
+
+  } catch (error) {
+    console.error("Error fetching memorials:", error);
+    throw new Error("Failed to fetch memorials");
+  }
 }
