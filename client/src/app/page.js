@@ -1,8 +1,27 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
+import katafalka from '../assets/katafalka.png'
+import Image from "next/image";
+import { motion, useAnimation } from 'framer-motion'
+import { useEffect } from "react";
 
 export default function Home() {
+
+  const controls = useAnimation();
+
+  useEffect(() => {
+    const animate = async () => {
+      while (true) {
+        await controls.start({ x: ["-100%", "100%"], transition: { duration: 10, ease: "easeInOut" } });
+         controls.set({ x: "-100%" }); 
+        await new Promise(res => setTimeout(res, 1000)); 
+      }
+    };
+    animate();
+  }, [controls]);
   return (
     <>
      <section className=" py-12 md:py-24">
@@ -24,6 +43,9 @@ export default function Home() {
             </Link>
           </div>
 
+          <motion.div animate={controls} className="w-full max-w-[300px] mx-auto">
+          <Image src={katafalka} alt="katafalka" />
+        </motion.div>
 
        </div>
      </section>
