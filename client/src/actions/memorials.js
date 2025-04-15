@@ -98,3 +98,19 @@ export async function AddMemorialToDB({memorialData, images}) {
         throw new Error("Error adding car:" + error.message);
     }
 }
+
+
+export async function GetMemorials() {
+  const user = await checkUser();
+
+  
+  if(!user) throw new Error("User not found");
+
+  const allMemorials = await db.deadPeople.findMany({
+    orderBy: {
+      createdAt: 'desc', 
+    },
+  });
+
+  return allMemorials;
+}
