@@ -116,7 +116,7 @@ export default function MemorialForm () {
       useEffect(() => {
         if(memorialResult?.success) {
           toast.success("მემორიალი შეიქმნა წარმატებით");
-          router.push("/memorials");
+          router.push("/memorials/showmemorials");
         }
     }, [memorialResult, router])
 

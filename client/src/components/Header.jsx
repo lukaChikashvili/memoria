@@ -13,19 +13,22 @@ const Header = async ({ isAdminPage = false}) => {
     <div className='w-full flex items-center justify-between px-20 h-36'>
         <div>
           <Link href = {isAdminPage ? "/admin" : "/"}>
-            <Image src = {logo} alt = "logo" width = {200} height={200} />
+           
             </Link>
         </div>
 
-        <div>
+        <div className='flex gap-12'>
             <SignedIn>
               
-              
+              <div className='flex gap-8'>
+                 <Button className="cursor-pointer futuristic-button">Design UFO</Button>
+                 <Button className="cursor-pointer futuristic-button">saved aliens</Button>
+              </div>
             </SignedIn>
 
             <SignedOut>
                 <SignInButton forceRedirectUrl='/'>
-                  <Button variant = "outline" className="cursor-pointer"><LogIn /> შესვლა</Button>
+                  <Button variant = "outline" className="cursor-pointer futuristic-button"><LogIn /> Enter</Button>
                 </SignInButton>
               
             </SignedOut>

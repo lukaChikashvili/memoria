@@ -85,7 +85,7 @@ export async function AddMemorialToDB({memorialData, images}) {
         }
       });
 
-      revalidatePath('/memorials');
+      revalidatePath('/memorials/showmemorials');
   
 
       return {
@@ -102,15 +102,8 @@ export async function AddMemorialToDB({memorialData, images}) {
 
 
 export async function GetMemorials() {
-  const { userId } = await auth();
+ 
 
-  if (!userId) throw new Error("Unauthorized");
-
-  const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
-  });
-
-  if (!user) throw new Error("User not found");
   try {
     const allMemorials = await db.deadPeople.findMany({
       orderBy: {
@@ -122,5 +115,27 @@ export async function GetMemorials() {
   } catch (error) {
     console.error("Error fetching memorials:", error);
     throw new Error("Failed to fetch memorials");
+  }
+}
+
+
+
+export async function GetMemorialsById(memorialId) {
+  try {
+    const memorial = await db.deadPeople.findUnique({
+      where: {
+        id: memorialId,
+      },
+    });
+
+    if (!memorial) {
+      throw new Error("Memorial not found");
+    }
+
+    return memorial;
+    
+  } catch (error) {
+    console.error("Error fetching memorial by id:", error);
+    throw new Error("Failed to fetch memorial by id");
   }
 }

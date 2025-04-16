@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider >
     <html lang="en" >
     <head>
-    <link rel="stylesheet" href="//cdn.web-fonts.ge/fonts/bpg-algeti/css/bpg-algeti.min.css">
+    <link href="https://fonts.cdnfonts.com/css/cyberform" rel="stylesheet">
 
     </link>
       </head>
