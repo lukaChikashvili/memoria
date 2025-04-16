@@ -174,3 +174,12 @@ body {
 .futuristic-button:hover {
   color: #fff;
 }
+
+.text-3d {
+  color: white;
+  font-weight: 900;
+  text-shadow:
+    2px 2px 0 #000,
+    3px 3px 0 #000,
+    4px 4px 0 #000;
+}
