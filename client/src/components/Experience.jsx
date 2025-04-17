@@ -6,7 +6,8 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor } = useContext(ThemeContext);
+    const { bodyColor, hair } = useContext(ThemeContext);
+    
 
 /*
     useEffect(() => {
@@ -97,11 +98,11 @@ const Experience = () => {
         if (model.scene) {
          
           model.scene.traverse((child) => {
-            if (child.isMesh && bodyColor) {
+            if (child.isMesh && bodyColor  ) {
                 if(child.name === "Object_9" ) {
                     child.material.color.set(bodyColor);
-                  
-                }
+                    
+                } 
                 if(child.name === "Object_10" ) {
                     // waist
                     child.material.color.set(bodyColor);
@@ -116,12 +117,34 @@ const Experience = () => {
                 if(child.name === "Object_13" ) {
                     // legs
                     child.material.color.set(bodyColor);
+                   
+                    console.log(child)
                 }
+
+               
+            }
+
+            if(child.isMesh && hair) {
+                if(child.name === "Object_35"   ) {
+                    // hair
+                    child.material.map = null; 
+                    child.material.color.set(hair); 
+                    child.material.needsUpdate = true; 
+                }
+
+                if(child.name === "Object_33"   ) {
+                    // hair
+                    child.material.map = null; 
+                    child.material.color.set(hair); 
+                    child.material.needsUpdate = true; 
+                }
+
+                
             }
         })
     }
 
-    }, [model, bodyColor]);
+    }, [model, bodyColor, hair]);
 
   return (
 
