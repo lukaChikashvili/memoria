@@ -9,10 +9,13 @@ export function ThemeProvider({ children }) {
    const [bodyModal, setBodyModal] = useState(false);
    const [bodyColor, setBodyColor] = useState("");
    const [hair, setHair] = useState("");
+   const [eye, setEye] = useState('');
+
  
 
   return (
-    <ThemeContext.Provider value={{ bodyModal, setBodyModal, bodyColor, setBodyColor, hair, setHair }}>
+    <ThemeContext.Provider value={{ bodyModal, setBodyModal, bodyColor, 
+    setBodyColor, hair, setHair, eye, setEye }}>
       {children}
     </ThemeContext.Provider>
   );

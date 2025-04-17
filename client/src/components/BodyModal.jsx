@@ -7,8 +7,9 @@ const BodyModal = () => {
     const colors = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
     const haircolors = ['#1C1C1C', '#3B2F2F', '#A1866F', '#954535', '#B8860B', '#D1B280', '#F2D16B', '#E5E4E2', '#F8BBD0', '#008080', '#98FF98',
 '#00FFFF', '#FF0000'];
+   const eyecolor = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
 
-    const { setBodyColor, setHair } = useContext(ThemeContext);
+    const { setBodyColor, setHair, setEye } = useContext(ThemeContext);
 
     
   return (
@@ -51,6 +52,26 @@ const BodyModal = () => {
           <Button
             key={color}
             onClick={() => setHair(color)}
+            className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card className="relative z-10">
+    <CardHeader>
+      <CardTitle>თვალის ფერი</CardTitle>
+      <CardDescription>შეცვალეთ თვალის ფერი</CardDescription>
+    </CardHeader>
+
+    <CardContent>
+      <div className='flex gap-4 flex-wrap'>
+        {eyecolor.map((color) => (
+          <Button
+            key={color}
+            onClick={() => setEye(color)}
             className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
             style={{ backgroundColor: color }}
           />

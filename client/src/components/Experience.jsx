@@ -1,12 +1,16 @@
 import { ThemeContext } from '@/context/ThemeContext';
 import { useGLTF } from '@react-three/drei'
+import { useLoader } from '@react-three/fiber';
 import React, { useContext, useEffect, useState } from 'react'
 import * as THREE from 'three'
 
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor, hair } = useContext(ThemeContext);
+    const { bodyColor, hair, eye } = useContext(ThemeContext);
+
+    const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
+
     
 
 /*
@@ -122,6 +126,8 @@ const Experience = () => {
                 }
 
                
+
+               
             }
 
             if(child.isMesh && hair) {
@@ -141,10 +147,17 @@ const Experience = () => {
 
                 
             }
+
+            if(child.isMesh && eye) {
+                if (child.isMesh && ["Std_Eye_L", "Std_Eye_R"].includes(child.material.name)) {
+                    child.material.map = irisTexture;
+                    child.material.needsUpdate = true;
+                  }
+            }
         })
     }
 
-    }, [model, bodyColor, hair]);
+    }, [model, bodyColor, hair, eye, irisTexture]);
 
   return (
 
