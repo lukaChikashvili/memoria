@@ -7,7 +7,7 @@ export function ThemeProvider({ children }) {
 
    // body modal
    const [bodyModal, setBodyModal] = useState(false);
-   const [bodyColor, setBodyColor] = useState("red");
+   const [bodyColor, setBodyColor] = useState("");
  
 
   return (

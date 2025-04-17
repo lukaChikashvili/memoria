@@ -1,9 +1,12 @@
+import { ThemeContext } from '@/context/ThemeContext';
 import { useGLTF } from '@react-three/drei'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import * as THREE from 'three'
 
 const Experience = () => {
     const model = useGLTF('./face.glb');
+
+    const { bodyColor } = useContext(ThemeContext);
 
 /*
     useEffect(() => {
@@ -89,7 +92,39 @@ const Experience = () => {
 
       */
 
+      useEffect(() => {
+   
+        if (model.scene) {
+         
+          model.scene.traverse((child) => {
+            if (child.isMesh && bodyColor) {
+                if(child.name === "Object_9" ) {
+                    child.material.color.set(bodyColor);
+                  
+                }
+                if(child.name === "Object_10" ) {
+                    // waist
+                    child.material.color.set(bodyColor);
+                    
+                }
+                if(child.name === "Object_12" ) {
+                    // arms
+                    child.material.color.set(bodyColor);
+                    
+                }
+
+                if(child.name === "Object_13" ) {
+                    // legs
+                    child.material.color.set(bodyColor);
+                }
+            }
+        })
+    }
+
+    }, [model, bodyColor]);
+
   return (
+
   <>
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />

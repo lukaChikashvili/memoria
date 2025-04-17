@@ -4,9 +4,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import React, { useContext } from 'react'
 import { Button } from './ui/button'
 import { LogIn } from 'lucide-react'
-import logo from '../assets/logo.png'
-import Image from 'next/image'
-import Link from 'next/link'
+
 import { ThemeContext } from '@/context/ThemeContext'
 
 const Header =  ({ isAdminPage = false}) => {
