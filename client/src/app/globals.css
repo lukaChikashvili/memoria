@@ -119,67 +119,26 @@
   }
 }
 
+html,
 body {
-  font-family: 'Cyberform', sans-serif;
-  background: radial-gradient(circle at center, #00F0FF, #000814);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
-
-
-
-.futuristic-button {
-  font-family: 'Cyberform', sans-serif;
-  position: relative;
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  color: #B8FF00; 
-  background: transparent;
-  border: none;
-  letter-spacing: 2px;
-  cursor: pointer;
-  z-index: 0;
-  transition: color 0.3s ease;
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.futuristic-button::before,
-.futuristic-button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 2px solid #B8FF00;
-  clip-path: polygon(
-    0% 0%,                
-    calc(100% - 10px) 0%,
-    100% 10px,      
-    100% 100%,  
-    10px 100%,            
-    0% calc(100% - 10px)  
-  );
-  z-index: -1;
-  transition: all 0.4s ease;
-}
-
-.futuristic-button::after {
-  border-color: #fff;
-  opacity: 0;
-  transform: scale(1.05);
-}
-
-.futuristic-button:hover::after {
-  opacity: 1;
-  transform: scale(1);
-  filter: drop-shadow(0 0 10px #A31D1D);
-}
-
-.futuristic-button:hover {
-  color: #fff;
-}
-
-.text-3d {
-  color: white;
-  font-weight: 900;
-  text-shadow:
-    2px 2px 0 #000,
-    3px 3px 0 #000,
-    4px 4px 0 #000;
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }

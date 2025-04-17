@@ -1,8 +1,11 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { Toaster } from "sonner";
+import { Canvas } from "@react-three/fiber";
+import BackgroundCanvas from "@/components/BackgroundCanvas";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +33,17 @@ export default function RootLayout({ children }) {
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      >  
+       <BackgroundCanvas />
+   
         <Header />
         <main className="min-h-screen">
         {children}
         </main>
         <Toaster richColors />
+        
       </body>
+     
     </html>
     </ClerkProvider>
   );

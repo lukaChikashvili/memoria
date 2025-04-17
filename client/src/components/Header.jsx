@@ -12,18 +12,13 @@ const Header = async ({ isAdminPage = false}) => {
   return (
     <div className='w-full flex items-center justify-between px-20 h-36'>
         <div>
-          <Link href = {isAdminPage ? "/admin" : "/"}>
-             <h1 className='text-[#B8FF00] text-xl'>RoboLuv</h1>
-            </Link>
+          
         </div>
 
         <div className='flex gap-12'>
             <SignedIn>
               
-              <div className='flex gap-8'>
-                 <Button className="cursor-pointer futuristic-button">Design robot</Button>
-                 <Button className="cursor-pointer futuristic-button">saved robots</Button>
-              </div>
+             
             </SignedIn>
 
             <SignedOut>
