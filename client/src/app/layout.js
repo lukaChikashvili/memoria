@@ -34,10 +34,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >  
-       <BackgroundCanvas />
+       
    
         <Header />
         <main className="min-h-screen">
+          <BackgroundCanvas />
         {children}
         </main>
         <Toaster richColors />
