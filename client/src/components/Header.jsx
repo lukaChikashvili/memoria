@@ -1,13 +1,18 @@
+"use client"
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from './ui/button'
 import { LogIn } from 'lucide-react'
 import logo from '../assets/logo.png'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ThemeContext } from '@/context/ThemeContext'
 
-const Header = async ({ isAdminPage = false}) => {
+const Header =  ({ isAdminPage = false}) => {
+
+  const { setBodyModal, bodyModal } = useContext(ThemeContext);
+
     
   return (
     <div className='w-full flex items-center justify-between px-20 h-36 relative z-10'>
@@ -15,9 +20,10 @@ const Header = async ({ isAdminPage = false}) => {
           
         </div>
 
-        <div className='flex gap-12'>
+        <div className='flex gap-4'>
             <SignedIn>
-              
+               <Button variant = "outline" className='cursor-pointer '>ტანსაცმელი</Button>
+               <Button variant = "outline" className='cursor-pointer ' onClick = {() => setBodyModal(!bodyModal)}>სხეული</Button>
              
             </SignedIn>
 

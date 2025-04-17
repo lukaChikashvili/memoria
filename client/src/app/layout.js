@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import { Toaster } from "sonner";
 import { Canvas } from "@react-three/fiber";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >  
-       
+       <ThemeProvider>
    
         <Header />
         <main className="min-h-screen">
@@ -42,7 +43,7 @@ export default function RootLayout({ children }) {
         {children}
         </main>
         <Toaster richColors />
-        
+        </ThemeProvider>
       </body>
      
     </html>
