@@ -1,12 +1,16 @@
+import { useGLTF } from '@react-three/drei'
 import React from 'react'
 
 const Experience = () => {
+    const model = useGLTF('./face.glb');
+
   return (
   <>
-    <mesh>
-        <boxGeometry />
-        <meshStandardMaterial />
-    </mesh>
+    <group position={[0, -4, 0]}>
+      <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
+    </group>
+
+ 
   </>
   )
 }

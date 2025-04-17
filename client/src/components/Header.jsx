@@ -10,7 +10,7 @@ import Link from 'next/link'
 const Header = async ({ isAdminPage = false}) => {
     
   return (
-    <div className='w-full flex items-center justify-between px-20 h-36'>
+    <div className='w-full flex items-center justify-between px-20 h-36 relative z-10'>
         <div>
           
         </div>
