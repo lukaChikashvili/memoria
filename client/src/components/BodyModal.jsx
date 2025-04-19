@@ -1,7 +1,10 @@
+
+
 import React, { useContext } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button';
 import { ThemeContext } from '@/context/ThemeContext';
+import { addBody } from '@/actions/memorials';
 
 const BodyModal = () => {
     const colors = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
@@ -9,7 +12,17 @@ const BodyModal = () => {
 '#00FFFF', '#FF0000'];
    const eyecolor = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
 
-    const { setBodyColor, setHair, setEye } = useContext(ThemeContext);
+    const { setBodyColor, setHair, setEye, bodyColor, hair, eye } = useContext(ThemeContext);
+
+    const saveBody = async () => {
+        try {
+          const res = await addBody({bodyColor, hair, eye});
+          console.log(res)
+          
+        } catch (error) {
+          
+        }
+    }
 
     
   return (
@@ -19,7 +32,7 @@ const BodyModal = () => {
  
  
 
-  <Card className="relative z-10">
+  <Card className="relative z-10 -mt-8">
     <CardHeader>
       <CardTitle>მთლიანი სხეული</CardTitle>
       <CardDescription>შეცვალეთ სხეულის ფერი</CardDescription>
@@ -80,7 +93,7 @@ const BodyModal = () => {
     </CardContent>
   </Card>
 
- 
+  <Button onClick = {saveBody}>შენახვა</Button>
 </div>
 </div>
 

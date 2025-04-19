@@ -2,10 +2,11 @@
 
 import { checkUser } from "@/lib/checkUser";
 import { db } from "@/lib/prisma";
-import { createClient } from "@/lib/supabase";
+
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { userAgent } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
 async function fileToBase64(file) {
@@ -17,26 +18,22 @@ async function fileToBase64(file) {
 
 
   export async function addBody({ bodyColor, hair, eye }) {
-    const { userId } = auth();
-  
-    if (!userId) {
-      throw new Error('Unauthorized');
-    }
-  
-    const user = await prisma.user.findUnique({
-      where: { clerkUserId: userId },
+    const { userId } = await auth();
+    if(!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+        where: {
+            clerkUserId: userId
+        }
     });
+
   
-    if (!user) {
-      throw new Error('User not found');
-    }
-  
-    const body = await prisma.body.create({
+    const body = await db.body.create({
       data: {
         bodyColor,
         hair,
         eye,
-        userId: user.id,
+        userId: user.id
       },
     });
   
