@@ -24,24 +24,21 @@ model User {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   role          UserRole     @default(USER)
- memorials DeadPeople[] @relation("UserMemorials")
+ memorials Body[] @relation("Body")
 
 }
 
-model DeadPeople {
-   id            String     @id @default(uuid())
-  fullName      String
-   birthYear     Int?     
-  deathYear     Int?   
-  biography     String?      
-  images        String[]     
-  funeralPlace  String?       
-  createdById   String
-  createdBy   User   @relation("UserMemorials", fields: [createdById], references: [id])
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  
+model Body {
+  id        String   @id @default(uuid())
+  bodyColor String
+  hair      String
+  eye       String
+  userId    String
+  user      User     @relation("Body", fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
 
 
 

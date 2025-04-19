@@ -14,128 +14,31 @@ async function fileToBase64(file) {
     return buffer.toString("base64");
   }
 
-export async function AddMemorialToDB({memorialData, images}) {
-    try {
-      const user = await checkUser();
-
-    
-       
 
 
-        if(!user) throw new Error("User not found");
-
-        const memorialId = uuidv4();
-        const folderPath = `memorials/${memorialId}`;
-
-        const cookieStore = await cookies();
-        const supabase = createClient(cookieStore);
-
-        const imageUrls = [];
-
-      for (let i = 0; i < images.length; i++) {
-         const base64Data = images[i];
-
-      
-      if (!base64Data || !base64Data.startsWith("data:image/")) {
-        console.warn("Skipping invalid image data");
-        continue;
-      }
-    
-
-    const base64 = base64Data.split(",")[1];
-      const imageBuffer = Buffer.from(base64, "base64");
-
-      const mimeMatch = base64Data.match(/data:image\/([a-zA-Z0-9]+);/);
-      const fileExtension = mimeMatch ? mimeMatch[1] : "jpeg";
-
-      const fileName = `image-${Date.now()}-${i}.${fileExtension}`;
-      const filePath = `${folderPath}/${fileName}`;
-
-      const { data, error } = await supabase.storage.
-      from("memoria-images").upload(filePath, imageBuffer, {
-        contentType: `image/${fileExtension}`,
-      });
-
-      if (error) {
-        console.error("Error uploading image:", error);
-        throw new Error(`Failed to upload image: ${error.message}`);
-      }
-
-      const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/memoria-images/${filePath}`;
-
-      imageUrls.push(publicUrl);
-
-    }
-
-      if (imageUrls.length === 0) {
-        throw new Error("No valid images were uploaded");
-      }
-
-      const memorial = await db.deadPeople.create({
-        data: {
-          id: memorialId,
-          fullName: memorialData.fullName,
-          birthYear: memorialData.birthYear,
-          deathYear: memorialData.deathYear,
-          biography: memorialData.biography,
-          images: imageUrls,
-          funeralPlace: memorialData.funeralPlace,
-          createdById: user.id,
-          createdAt: new Date(), 
-        }
-      });
-
-      revalidatePath('/memorials/showmemorials');
+  export async function addBody({ bodyColor, hair, eye }) {
+    const { userId } = auth();
   
-
-      return {
-        success: true,
-      };
-
-    
-
-        
-    } catch (error) {
-        throw new Error("Error adding car:" + error.message);
+    if (!userId) {
+      throw new Error('Unauthorized');
     }
-}
-
-
-export async function GetMemorials() {
- 
-
-  try {
-    const allMemorials = await db.deadPeople.findMany({
-      orderBy: {
-        createdAt: 'desc',
+  
+    const user = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+  
+    if (!user) {
+      throw new Error('User not found');
+    }
+  
+    const body = await prisma.body.create({
+      data: {
+        bodyColor,
+        hair,
+        eye,
+        userId: user.id,
       },
     });
-    return allMemorials;
-
-  } catch (error) {
-    console.error("Error fetching memorials:", error);
-    throw new Error("Failed to fetch memorials");
+  
+    return body;
   }
-}
-
-
-
-export async function GetMemorialsById(memorialId) {
-  try {
-    const memorial = await db.deadPeople.findUnique({
-      where: {
-        id: memorialId,
-      },
-    });
-
-    if (!memorial) {
-      throw new Error("Memorial not found");
-    }
-
-    return memorial;
-    
-  } catch (error) {
-    console.error("Error fetching memorial by id:", error);
-    throw new Error("Failed to fetch memorial by id");
-  }
-}
