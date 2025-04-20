@@ -13,7 +13,7 @@ import PresetModalComp from "@/components/PresetModalComp";
 
 export default function Home() {
   const { bodyModal,setBodyColor, setHair, setEye, 
-          clothModal, setPresetModal, presetModal
+          clothModal, setPresetModal, presetModal, currentPreset
    } = useContext(ThemeContext);
 
   useEffect(() => {
@@ -39,7 +39,8 @@ export default function Home() {
      {clothModal&& <ClothModal />}
 <div className="w-full absolute z-10 bg-transparent bottom-4 left-350">
      <div>
-       <Image onClick={() => setPresetModal(!presetModal)} src = {city} alt = "city" width = {70} height = {80} className="rounded-xl shadow-lg cursor-pointer" />
+       <Image onClick={() => setPresetModal(!presetModal)} src = {currentPreset === "city" ? 
+          city : currentPreset === "forest" ? forest : currentPreset === "apartment" ? apartment : city} alt = "city" width = {70} height = {80} className="rounded-xl shadow-lg cursor-pointer" />
      </div>
 </div>
 

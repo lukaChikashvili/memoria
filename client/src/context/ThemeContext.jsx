@@ -22,13 +22,21 @@ export function ThemeProvider({ children }) {
 
    const [presetModal, setPresetModal] = useState(false);
 
+   const [currentPreset, setCurrentPreset] = useState('city');
+
+   const changePreset = (preset) => {
+      setCurrentPreset(preset);
+
+   }
+
 
  
 
   return (
     <ThemeContext.Provider value={{ bodyModal, setBodyModal, bodyColor, 
     setBodyColor, hair, setHair, eye, setEye, clothModal, setClothModal,
-    shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal }}>
+    shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal ,
+    currentPreset, changePreset}}>
       {children}
     </ThemeContext.Provider>
   );

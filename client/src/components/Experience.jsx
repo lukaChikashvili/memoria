@@ -7,7 +7,7 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor, hair, eye, shirt, shirtTexture } = useContext(ThemeContext);
+    const { bodyColor, hair, eye, shirt, shirtTexture, currentPreset } = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
    
@@ -206,7 +206,7 @@ const Experience = () => {
   return (
 
   <>
-  <Environment preset = "park" background />
+  <Environment preset = {currentPreset} background />
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
     </group>
