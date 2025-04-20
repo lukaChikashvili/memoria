@@ -44,7 +44,7 @@ async function fileToBase64(file) {
           eye,
         },
       });
-      return updatedBody;
+      return { success: true, data: updatedBody };
     }else {
       const newBody = await db.body.create({
         data: {
@@ -55,7 +55,7 @@ async function fileToBase64(file) {
         },
       });
     
-      return newBody;
+      return { success: true, data: newBody };
 
     }
 

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { ThemeContext } from '@/context/ThemeContext';
 import { addBody, getBody } from '@/actions/memorials';
+import { toast } from 'sonner';
 
 const BodyModal = () => {
     const colors = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
@@ -12,12 +13,20 @@ const BodyModal = () => {
 '#00FFFF', '#FF0000'];
    const eyecolor = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
 
-    const { setBodyColor, setHair, setEye, bodyColor, hair, eye } = useContext(ThemeContext);
+    const { setBodyColor, setHair, setEye, bodyColor, hair, eye, setBodyModal } = useContext(ThemeContext);
 
     const saveBody = async () => {
         try {
-          const res = await addBody({bodyColor, hair, eye});
-          console.log(res)
+          if(!bodyColor || !hair || !eye) {
+            toast.error("აირჩიეთ თმის, კანის და თვალის ფერი");
+          }else {
+            const res = await addBody({bodyColor, hair, eye});
+            if(res.success) {
+              toast.success("ცვლილება შეინახა წარმატებით");
+             setBodyModal(false);
+            }
+          }
+          
           
         } catch (error) {
            console.log(error);

@@ -7,7 +7,7 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor, hair, eye } = useContext(ThemeContext);
+    const { bodyColor, hair, eye, shirt } = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
 
@@ -154,10 +154,20 @@ const Experience = () => {
                     child.material.needsUpdate = true;
                   }
             }
-        })
+
+            if(child.name === "Object_31" ) {
+                // shirt
+                child.material.map = null; 
+                child.material.color.set(shirt); 
+                child.material.needsUpdate = true; 
+            }
+        });
+
+
+        
     }
 
-    }, [model, bodyColor, hair, eye, irisTexture]);
+    }, [model, bodyColor, hair, eye, irisTexture, shirt]);
 
   return (
 

@@ -2,11 +2,14 @@
 
 import { getBody } from "@/actions/memorials";
 import BodyModal from "@/components/BodyModal";
+import ClothModal from "@/components/ClothModal";
 import { ThemeContext } from "@/context/ThemeContext";
 import { useContext, useEffect } from "react";
 
 export default function Home() {
-  const { bodyModal,setBodyColor, setHair, setEye, bodyColor, hair, eye } = useContext(ThemeContext);
+  const { bodyModal,setBodyColor, setHair, setEye, 
+          clothModal
+   } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchBody = async () => {
@@ -28,6 +31,7 @@ export default function Home() {
   return (
  <section className='r3f-canvas'>
      {bodyModal && <BodyModal />}
+     {clothModal&& <ClothModal />}
  </section>
   );
 }
