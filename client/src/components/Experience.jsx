@@ -1,5 +1,5 @@
 import { ThemeContext } from '@/context/ThemeContext';
-import { useGLTF } from '@react-three/drei'
+import { Environment, useGLTF } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber';
 import React, { useContext, useEffect, useState } from 'react'
 import * as THREE from 'three'
@@ -7,9 +7,31 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor, hair, eye, shirt } = useContext(ThemeContext);
+    const { bodyColor, hair, eye, shirt, shirtTexture } = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
+   
+
+    const [shirtTextureImg, setShirtTextureImg] = useState(null);
+
+    useEffect(() => {
+        if (shirtTexture && shirtTexture.src) {
+          const loader = new THREE.TextureLoader();
+          loader.load(
+            shirtTexture.src,
+            (texture) => {
+              setShirtTextureImg(texture);
+            },
+            undefined,
+            (error) => {
+              console.error("Texture loading failed:", error);
+            }
+          );
+        } else {
+          console.warn("Invalid shirtTexture:", shirtTexture);
+        }
+      }, [shirtTexture]);
+
 
     
 
@@ -160,6 +182,18 @@ const Experience = () => {
                 child.material.map = null; 
                 child.material.color.set(shirt); 
                 child.material.needsUpdate = true; 
+               
+            }
+
+            if(child.name === "Object_31" && child.material) {
+                if (shirtTextureImg) {
+                    child.material.map = shirtTextureImg;
+                    child.material.color.set('white');
+                } else {
+                    child.material.map = null;
+                    child.material.color.set(shirt);
+                }
+                child.material.needsUpdate = true;
             }
         });
 
@@ -167,11 +201,12 @@ const Experience = () => {
         
     }
 
-    }, [model, bodyColor, hair, eye, irisTexture, shirt]);
+    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg]);
 
   return (
 
   <>
+  <Environment preset = "park" background />
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
     </group>

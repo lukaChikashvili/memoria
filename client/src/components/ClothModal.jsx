@@ -3,16 +3,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { ThemeContext } from '@/context/ThemeContext';
 import Image from 'next/image';
+import texture1 from '../assets/texture1.jpg'
+import texture2 from '../assets/texture2.png'
+import texture3 from '../assets/texture3.jpg'
+import texture4 from '../assets/texture4.png'
+
 
 const ClothModal = () => {
 
-    const { shirt, setShirt } = useContext(ThemeContext);
+    const { shirtTexture, setShirtTexture, setShirt } = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
                     '#FEBA17', '#FF2DF1', '#B03052', '#CCDF92', '#8B5DFF', 'black'];
-    const images = ['https://img.freepik.com/premium-vector/abstract-background-design-vector-illustration_1299084-7915.jpg?semt=ais_hybrid&w=740', 
-    'https://img.freepik.com/free-vector/hand-drawn-abstract-leaves-pattern_23-2149001508.jpg?semt=ais_hybrid&w=740', 
-'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAxOrylLiXIEgzuHGmJcs2WyA6BQNdSYEKN9A62503klBnrXPvdwSyLgQ1c1YNWW-zpIo&usqp=CAU', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo7MikGBW_xLCqrQycWFPaYHJ9qzl6pS6bWg&s'];
+    const images = [texture1, texture2, texture3, texture4];
    const eyecolor = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
 
 
@@ -54,7 +57,9 @@ const ClothModal = () => {
         <div className='flex gap-4 flex-wrap'>
            {images.map((value, i) => (
             <Image key={i} src = {value}
-            alt = "image" width = {100} height = {100} className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60'
+            alt = "image" width = {100} height = {100} 
+              onClick={() => setShirtTexture(value)}
+             className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60'
             />
            ))}
         </div>
@@ -63,7 +68,7 @@ const ClothModal = () => {
   
   
     
-    <Button >შენახვა</Button>
+    <Button className='bg-yellow-600'>შენახვა</Button>
   </div>
   </div>
   

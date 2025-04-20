@@ -1,4 +1,5 @@
 'use client'
+
 import { createContext,  useState } from "react";
 
 export const ThemeContext = createContext();
@@ -17,6 +18,9 @@ export function ThemeProvider({ children }) {
    const [clothModal, setClothModal] = useState(false);
 
    const [shirt, setShirt] = useState('');
+   const [shirtTexture, setShirtTexture] = useState('');
+
+   const [presetModal, setPresetModal] = useState(false);
 
 
  
@@ -24,7 +28,7 @@ export function ThemeProvider({ children }) {
   return (
     <ThemeContext.Provider value={{ bodyModal, setBodyModal, bodyColor, 
     setBodyColor, hair, setHair, eye, setEye, clothModal, setClothModal,
-    shirt, setShirt }}>
+    shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal }}>
       {children}
     </ThemeContext.Provider>
   );

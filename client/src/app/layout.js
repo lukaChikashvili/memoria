@@ -8,6 +8,7 @@ import { Canvas } from "@react-three/fiber";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
 import { ThemeProvider } from "@/context/ThemeContext";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,9 +42,12 @@ export default function RootLayout({ children }) {
         <main className="min-h-screen">
           <BackgroundCanvas />
         {children}
+      
         </main>
         <Toaster richColors />
+       
         </ThemeProvider>
+        
       </body>
      
     </html>
