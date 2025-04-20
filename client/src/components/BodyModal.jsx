@@ -1,10 +1,10 @@
 
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button';
 import { ThemeContext } from '@/context/ThemeContext';
-import { addBody } from '@/actions/memorials';
+import { addBody, getBody } from '@/actions/memorials';
 
 const BodyModal = () => {
     const colors = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
@@ -20,9 +20,13 @@ const BodyModal = () => {
           console.log(res)
           
         } catch (error) {
-          
+           console.log(error);
         }
     }
+
+    
+
+    
 
     
   return (

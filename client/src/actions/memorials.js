@@ -27,15 +27,51 @@ async function fileToBase64(file) {
         }
     });
 
-  
-    const body = await db.body.create({
-      data: {
-        bodyColor,
-        hair,
-        eye,
+    const existingBody = await db.body.findFirst({
+      where: {
         userId: user.id
-      },
+      }
+    });
+
+    if(existingBody) {
+      const updatedBody = await db.body.update({
+        where: {
+          id: existingBody.id
+        },
+        data: {
+          bodyColor,
+          hair,
+          eye,
+        },
+      });
+      return updatedBody;
+    }else {
+      const newBody = await db.body.create({
+        data: {
+          bodyColor,
+          hair,
+          eye,
+          userId: user.id
+        },
+      });
+    
+      return newBody;
+
+    }
+
+  
+    
+  }
+
+
+  export async function getBody() {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+  
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+      include: { memorials: true }
     });
   
-    return body;
+    return user?.memorials?.[0] ?? null;
   }

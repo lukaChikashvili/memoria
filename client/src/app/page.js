@@ -1,11 +1,29 @@
 "use client"
 
+import { getBody } from "@/actions/memorials";
 import BodyModal from "@/components/BodyModal";
 import { ThemeContext } from "@/context/ThemeContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 export default function Home() {
-  const { bodyModal } = useContext(ThemeContext);
+  const { bodyModal,setBodyColor, setHair, setEye, bodyColor, hair, eye } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const fetchBody = async () => {
+      try {
+        const res = await getBody();
+        if (res) {
+          setBodyColor(res.bodyColor);
+          setHair(res.hair);
+          setEye(res.eye);
+        }
+      } catch (error) {
+        console.error("Failed to fetch body data", error);
+      }
+    };
+  
+    fetchBody();
+  }, []);
 
   return (
  <section className='r3f-canvas'>
