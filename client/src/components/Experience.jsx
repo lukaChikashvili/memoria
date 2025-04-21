@@ -7,12 +7,13 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, currentPreset, presetModal } = useContext(ThemeContext);
+    const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, removeSkirt,  currentPreset, skirtTexture } = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
    
 
     const [shirtTextureImg, setShirtTextureImg] = useState(null);
+    const [skirtTextureImg, setSkirtTextureImg] = useState(null);
 
     useEffect(() => {
         if (shirtTexture && shirtTexture.src) {
@@ -30,7 +31,24 @@ const Experience = () => {
         } else {
           console.warn("Invalid shirtTexture:", shirtTexture);
         }
-      }, [shirtTexture]);
+
+
+        if (skirtTexture && skirtTexture.src) {
+          const loader = new THREE.TextureLoader();
+          loader.load(
+            skirtTexture.src,
+            (texture) => {
+              setSkirtTextureImg(texture);
+            },
+            undefined,
+            (error) => {
+              console.error("Texture loading failed:", error);
+            }
+          );
+        } else {
+          console.warn("Invalid shirtTexture:", skirtTexture);
+        }
+      }, [shirtTexture, skirtTexture]);
 
 
     
@@ -205,13 +223,41 @@ const Experience = () => {
 
            
           }
+
+          if(child.name === "Object_39" && child.material) {
+            if (skirtTextureImg) {
+                child.material.map = skirtTextureImg;
+                child.material.color.set(skirt);
+            } else {
+                child.material.map = null;
+                child.material.color.set(skirt);
+            }
+            child.material.needsUpdate = true;
+        }
+
+        if(child.isMesh && removeSkirt) {
+          if(child.name === "Object_39" && child.material) {
+              
+            child.visible = false;
+
+       
+      }
+        }else {
+          if(child.name === "Object_39" && child.material) {
+              
+            child.visible = true;
+
+       
+      }
+        }
+       
         });
 
 
         
     }
 
-    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg, skirt ]);
+    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg, removeSkirt, skirt, skirtTextureImg ]);
 
   return (
 

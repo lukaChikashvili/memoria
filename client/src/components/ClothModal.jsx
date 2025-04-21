@@ -8,11 +8,12 @@ import texture2 from '../assets/texture2.png'
 import texture3 from '../assets/texture3.jpg'
 import texture4 from '../assets/texture4.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Eye, EyeClosed } from 'lucide-react';
 
 
 const ClothModal = () => {
 
-    const { setSkirt, setShirtTexture, setShirt } = useContext(ThemeContext);
+    const { setSkirt, setShirtTexture, setShirt, setSkirtTexture, removeSkirt, setRemoveSkirt } = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
                     '#FEBA17', '#FF2DF1', '#B03052', '#CCDF92', '#8B5DFF', 'black'];
@@ -38,6 +39,11 @@ const ClothModal = () => {
           <TabsTrigger value="skirt">
           
             ქვედა ტანსაცმელი
+          </TabsTrigger>
+
+          <TabsTrigger value="visibility">
+          
+            გახადე ტანსაცმელი
           </TabsTrigger>
         </TabsList>
 
@@ -69,7 +75,7 @@ const ClothModal = () => {
     <Card className="relative z-10  ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
-        <CardDescription>ტოპის ფერი</CardDescription>
+        <CardDescription>ტოპის პრინტი</CardDescription>
       </CardHeader>
   
       <CardContent>
@@ -86,7 +92,7 @@ const ClothModal = () => {
     </Card>
     </TabsContent>
 
-    <TabsContent value = "skirt">
+    <TabsContent value = "skirt" className="flex flex-col gap-4">
     <Card className="relative z-10  ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
@@ -107,7 +113,42 @@ const ClothModal = () => {
       </CardContent>
     </Card>
 
+    <Card className="relative z-10  ">
+      <CardHeader>
+        <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
+        <CardDescription>ქვედაბოლოს პრინტი</CardDescription>
+      </CardHeader>
+  
+      <CardContent>
+        <div className='flex gap-4 flex-wrap'>
+           {images.map((value, i) => (
+            <Image key={i} src = {value}
+            alt = "image" width = {100} height = {100} 
+              onClick={() => setSkirtTexture(value)}
+             className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60'
+            />
+           ))}
+        </div>
+      </CardContent>
+    </Card>
+
     </TabsContent>
+
+    <TabsContent value = "visibility" className="flex flex-col gap-4">
+    <Card className="relative z-10  ">
+      <CardHeader>
+        <CardTitle>გახადეთ ტანსაცმელი</CardTitle>
+        <CardDescription>მოაშორე ზედა</CardDescription>
+      </CardHeader>
+  
+      <CardContent className="flex items-center gap-4">
+          <Button>პერანგის მოშორება</Button>
+          <Button onClick = {() => setRemoveSkirt(!removeSkirt)}>{removeSkirt ? <Eye /> : <EyeClosed />}კაბის მოშორება</Button>
+      </CardContent>
+    </Card>
+
+  
+      </TabsContent>
   
     </Tabs>
   
