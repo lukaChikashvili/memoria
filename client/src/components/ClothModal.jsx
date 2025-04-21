@@ -8,12 +8,13 @@ import texture2 from '../assets/texture2.png'
 import texture3 from '../assets/texture3.jpg'
 import texture4 from '../assets/texture4.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Eye, EyeClosed } from 'lucide-react';
+import { Eye, EyeClosed, Loader2 } from 'lucide-react';
 
 
 const ClothModal = () => {
 
-    const { setSkirt, setShirtTexture, setShirt, setSkirtTexture, removeSkirt, setRemoveSkirt } = useContext(ThemeContext);
+    const { setSkirt, setShirtTexture, setShirt, setSkirtTexture, removeSkirt,
+       setRemoveSkirt, removeShirt, setRemoveShirt , setPanty, removePanty, setRemovePanty, removeHair, setRemoveHair} = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
                     '#FEBA17', '#FF2DF1', '#B03052', '#CCDF92', '#8B5DFF', 'black'];
@@ -113,6 +114,7 @@ const ClothModal = () => {
       </CardContent>
     </Card>
 
+{!removeSkirt && 
     <Card className="relative z-10  ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
@@ -123,7 +125,7 @@ const ClothModal = () => {
         <div className='flex gap-4 flex-wrap'>
            {images.map((value, i) => (
             <Image key={i} src = {value}
-            alt = "image" width = {100} height = {100} 
+            alt = "image" width = {60} height = {60} 
               onClick={() => setSkirtTexture(value)}
              className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60'
             />
@@ -131,6 +133,28 @@ const ClothModal = () => {
         </div>
       </CardContent>
     </Card>
+}
+
+    {removeSkirt &&  <Card className="relative z-10  ">
+      <CardHeader>
+        <CardTitle>საცვალი / ნიფხავი </CardTitle>
+        <CardDescription>აარჩიეთ ფერი</CardDescription>
+      </CardHeader>
+  
+      <CardContent>
+        <div className='flex gap-4 flex-wrap'>
+        {skirtColor.map((color) => (
+            <Button
+              key={color}
+              onClick={() => setPanty(color)}
+              className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+              style={{ backgroundColor: color }}
+            />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+}
 
     </TabsContent>
 
@@ -141,9 +165,11 @@ const ClothModal = () => {
         <CardDescription>მოაშორე ზედა</CardDescription>
       </CardHeader>
   
-      <CardContent className="flex items-center gap-4">
-          <Button>პერანგის მოშორება</Button>
-          <Button onClick = {() => setRemoveSkirt(!removeSkirt)}>{removeSkirt ? <Eye /> : <EyeClosed />}კაბის მოშორება</Button>
+      <CardContent className="flex items-center flex-wrap gap-1">
+          <Button variant="secondary" onClick = {() => setRemoveShirt(!removeShirt)}>{removeShirt ? <Eye /> : <EyeClosed />} პერანგის მოშორება</Button>
+          <Button variant="outline" onClick = {() => setRemoveSkirt(!removeSkirt)}>{removeSkirt ? <Eye /> : <EyeClosed />}კაბის მოშორება</Button>
+          <Button variant="outline" onClick = {() => setRemoveHair(!removeHair)}>{removeHair ? <Eye /> : <EyeClosed />}თმის მოშორება</Button>
+          {removeSkirt && <Button variant="outline" onClick = {() => setRemovePanty(!removePanty)}>{removePanty ? <Eye /> : <EyeClosed />}საცვლის მოშორება</Button> }
       </CardContent>
     </Card>
 

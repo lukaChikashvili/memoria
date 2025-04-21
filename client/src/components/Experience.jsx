@@ -7,7 +7,8 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, removeSkirt,  currentPreset, skirtTexture } = useContext(ThemeContext);
+    const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, removeSkirt,
+        currentPreset, skirtTexture, removeShirt, panty , removePanty, removeHair} = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
    
@@ -250,14 +251,82 @@ const Experience = () => {
        
       }
         }
+
+
+        if(child.isMesh && removeShirt) {
+          if(child.name === "Object_31" && child.material) {
+              
+            child.visible = false;
+
+       
+      }
+        }else {
+          if(child.name === "Object_31" && child.material) {
+              
+            child.visible = true;
+
+       
+      }
+        }
+
+
+
+        if(child.isMesh && panty) {
+          if(child.name === "Object_41" && child.material) {
+              
+              child.material.map = null; 
+              child.material.color.set(panty); 
+              child.material.needsUpdate = true; 
+
+       
+      }
+        }
+
+
+        if(child.isMesh && removePanty) {
+          if(child.name === "Object_41" && child.material) {
+              
+             child.visible = false;
+
+       
+      }
+        }else {
+          if(child.name === "Object_41" && child.material) {
+              
+            child.visible = true;
+
+       
+      }
+    }
+
+
+    // remove hair
+    if(child.isMesh && removeHair) {
+      if(child.name === "Object_35" && child.material) {
+          
+         child.visible = false;
+
+   
+  }
+    }else {
+      if(child.name === "Object_35" && child.material) {
+          
+        child.visible = true;
+
+   
+  }
+}
        
         });
+
+       
+      
 
 
         
     }
 
-    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg, removeSkirt, skirt, skirtTextureImg ]);
+    }, [model, bodyColor, hair, eye, irisTexture, removePanty, removeHair, shirt, shirtTextureImg, panty, removeSkirt, removeShirt, skirt, skirtTextureImg ]);
 
   return (
 
