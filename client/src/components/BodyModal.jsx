@@ -106,7 +106,7 @@ const BodyModal = () => {
     </CardContent>
   </Card>
 
-  <Button onClick = {saveBody}>შენახვა</Button>
+  <Button className="bg-[#3A59D1] " onClick = {saveBody}>შენახვა</Button>
 </div>
 </div>
 

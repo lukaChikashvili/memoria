@@ -6,6 +6,8 @@ import { Button } from './ui/button'
 import { LogIn, PersonStanding, Shirt } from 'lucide-react'
 
 import { ThemeContext } from '@/context/ThemeContext'
+import Image from 'next/image'
+import logo from '../assets/logo.png'
 
 const Header =  ({ isAdminPage = false}) => {
 
@@ -23,13 +25,13 @@ const Header =  ({ isAdminPage = false}) => {
   return (
     <div className='w-full flex items-center justify-between px-20 h-36 relative z-10'>
         <div>
-          
+          <Image src = {logo} alt = "logo" width = {100} height={100} />
         </div>
 
         <div className='flex gap-4'>
             <SignedIn>
-               <Button variant = "outline" className='cursor-pointer flex items-center gap-4 ' style = {{backgroundColor: clothModal ? `#FFB22C` : ""}} onClick = {openCloth}><Shirt size = {30} /> ტანსაცმელი</Button>
-               <Button variant = "outline" className='cursor-pointer ' style = {{backgroundColor: bodyModal ? `#FFB22C` : ""}} onClick = {closeBody}><PersonStanding /> სხეული</Button>
+               <Button variant = "outline" className='cursor-pointer flex items-center gap-4 ' style = {{backgroundColor: clothModal ? `#3A59D1` : "", color: clothModal ? `#fff` : "", }} onClick = {openCloth}><Shirt size = {30} /> ტანსაცმელი</Button>
+               <Button variant = "outline" className='cursor-pointer ' style = {{backgroundColor: bodyModal ? `#3A59D1` : "",  color: bodyModal ? `#fff` : ""}} onClick = {closeBody}><PersonStanding /> სხეული</Button>
              
             </SignedIn>
 

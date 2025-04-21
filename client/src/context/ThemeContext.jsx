@@ -24,6 +24,9 @@ export function ThemeProvider({ children }) {
 
    const [currentPreset, setCurrentPreset] = useState('city');
 
+   const [skirt, setSkirt] = useState('');
+
+
    const changePreset = (preset) => {
       setCurrentPreset(preset);
 
@@ -36,7 +39,7 @@ export function ThemeProvider({ children }) {
     <ThemeContext.Provider value={{ bodyModal, setBodyModal, bodyColor, 
     setBodyColor, hair, setHair, eye, setEye, clothModal, setClothModal,
     shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal ,
-    currentPreset, changePreset}}>
+    currentPreset, changePreset, skirt, setSkirt}}>
       {children}
     </ThemeContext.Provider>
   );

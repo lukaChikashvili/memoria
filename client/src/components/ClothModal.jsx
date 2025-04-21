@@ -7,26 +7,44 @@ import texture1 from '../assets/texture1.jpg'
 import texture2 from '../assets/texture2.png'
 import texture3 from '../assets/texture3.jpg'
 import texture4 from '../assets/texture4.png'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 
 const ClothModal = () => {
 
-    const { shirtTexture, setShirtTexture, setShirt } = useContext(ThemeContext);
+    const { setSkirt, setShirtTexture, setShirt } = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
                     '#FEBA17', '#FF2DF1', '#B03052', '#CCDF92', '#8B5DFF', 'black'];
     const images = [texture1, texture2, texture3, texture4];
-   const eyecolor = ['#FFDEDE', '#E8C999', '#C9B194', '#945034', '#A9B5DF', 'black'];
+   const skirtColor = ['#FFD63A', '#F75A5A', '#BF9264', '#8E7DBE', '#328E6E',
+   '#4F1C51', '#FF9A9A', '#DBDBDB', '#E53888', '#443627', 'black'];
 
 
   return (
     <div className='h-screen px-12 relative w-[43rem] '>
 
-    <div className='absolute inset-0 z-10 px-12 flex flex-col gap-6'>
    
+<div className='absolute inset-0 z-10 px-12 flex flex-col gap-6'>
    
-  
-    <Card className="relative z-10 -mt-8 ">
+  <Tabs defaultValue = "shirt">
+ 
+
+  <TabsList>
+          <TabsTrigger value="shirt">
+          
+            ზედა ტანსაცმელი
+          </TabsTrigger>
+          <TabsTrigger value="skirt">
+          
+            ქვედა ტანსაცმელი
+          </TabsTrigger>
+        </TabsList>
+
+<TabsContent value = "shirt" className="flex flex-col gap-4">
+
+
+    <Card className="relative z-10  ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
         <CardDescription>ტოპის ფერი</CardDescription>
@@ -45,6 +63,7 @@ const ClothModal = () => {
         </div>
       </CardContent>
     </Card>
+ 
 
 
     <Card className="relative z-10  ">
@@ -65,10 +84,36 @@ const ClothModal = () => {
         </div>
       </CardContent>
     </Card>
+    </TabsContent>
+
+    <TabsContent value = "skirt">
+    <Card className="relative z-10  ">
+      <CardHeader>
+        <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
+        <CardDescription>ქვედაბოლოს ფერი</CardDescription>
+      </CardHeader>
+  
+      <CardContent>
+        <div className='flex gap-4 flex-wrap'>
+        {skirtColor.map((color) => (
+            <Button
+              key={color}
+              onClick={() => setSkirt(color)}
+              className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+              style={{ backgroundColor: color }}
+            />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+
+    </TabsContent>
+  
+    </Tabs>
   
   
     
-    <Button className='bg-yellow-600'>შენახვა</Button>
+    <Button className='bg-[#3A59D1]'>შენახვა</Button>
   </div>
   </div>
   

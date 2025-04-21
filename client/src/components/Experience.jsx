@@ -7,7 +7,7 @@ import * as THREE from 'three'
 const Experience = () => {
     const model = useGLTF('./face.glb');
 
-    const { bodyColor, hair, eye, shirt, shirtTexture, currentPreset } = useContext(ThemeContext);
+    const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, currentPreset, presetModal } = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
    
@@ -195,18 +195,28 @@ const Experience = () => {
                 }
                 child.material.needsUpdate = true;
             }
+
+            if(child.isMesh && skirt)
+            if(child.name === "Object_39" && child.material) {
+              
+              child.material.map = null; 
+              child.material.color.set(skirt); 
+              child.material.needsUpdate = true; 
+
+           
+          }
         });
 
 
         
     }
 
-    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg]);
+    }, [model, bodyColor, hair, eye, irisTexture, shirt, shirtTextureImg, skirt ]);
 
   return (
 
   <>
-  <Environment preset = {currentPreset} background />
+     {currentPreset && <Environment preset = {currentPreset} background />} 
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
     </group>
