@@ -89,6 +89,7 @@ async function fileToBase64(file) {
         }
     });
 
+    
     const existingCloth = await db.cloth.findFirst({
       where: {
         userId: user.id
@@ -98,15 +99,17 @@ async function fileToBase64(file) {
     if(existingCloth) {
       const updatedCloth = await db.cloth.update({
         where: {
-          id: existingBody.id
+          id: existingCloth.id
         },
         data: {
           shirt, shirtTexture, skirt, 
-         skirtTexture, removeSkirt, removeShirt, removeHair
+          skirtTexture, removeSkirt, removeShirt, removeHair,
         },
       });
       return { success: true, data: updatedCloth };
+
     }else {
+    
       const newCloth = await db.cloth.create({
         data: {
           shirt, shirtTexture, skirt, 
@@ -114,11 +117,14 @@ async function fileToBase64(file) {
           userId: user.id
         },
       });
-    
-      return { success: true, data: newCloth };
 
+      return { success: true, data: newCloth };
+    }
+
+
+    
     }
 
   
     
-  }
+  

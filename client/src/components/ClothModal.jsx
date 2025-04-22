@@ -9,11 +9,12 @@ import texture3 from '../assets/texture3.jpg'
 import texture4 from '../assets/texture4.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Eye, EyeClosed, Loader2 } from 'lucide-react';
+import { addCloth } from '@/actions/memorials';
 
 
 const ClothModal = () => {
 
-    const { setSkirt, setShirtTexture, setShirt, setSkirtTexture, removeSkirt,
+    const { setSkirt, shirt,shirtTexture, skirt, skirtTexture, setShirtTexture, setShirt, setSkirtTexture, removeSkirt,
        setRemoveSkirt, removeShirt, setRemoveShirt , setPanty, removePanty, setRemovePanty, removeHair, setRemoveHair} = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
@@ -21,6 +22,17 @@ const ClothModal = () => {
     const images = [texture1, texture2, texture3, texture4];
    const skirtColor = ['#FFD63A', '#F75A5A', '#BF9264', '#8E7DBE', '#328E6E',
    '#4F1C51', '#FF9A9A', '#DBDBDB', '#E53888', '#443627', 'black'];
+
+
+   // save cloth 
+   const saveCloth = async () => {
+       try {
+        const res = await addCloth({shirt, shirtTexture: shirtTexture.src, skirt, skirtTexture:skirtTexture.src, removeHair, removeShirt, removeSkirt} )
+
+       } catch (error) {
+          console.log(error)
+       }
+   }
 
 
   return (
@@ -180,7 +192,7 @@ const ClothModal = () => {
   
   
     
-    <Button className='bg-[#3A59D1]'>შენახვა</Button>
+    <Button className='bg-[#3A59D1]' onClick = {saveCloth}>შენახვა</Button>
   </div>
   </div>
   
