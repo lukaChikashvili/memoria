@@ -1,6 +1,6 @@
 "use client"
 
-import { getBody, getCloth } from "@/actions/memorials";
+import { addScreenShots, getBody, getCloth } from "@/actions/memorials";
 import BodyModal from "@/components/BodyModal";
 import ClothModal from "@/components/ClothModal";
 import { ThemeContext } from "@/context/ThemeContext";
@@ -12,6 +12,7 @@ import apartment from '../assets/apartment.jpg'
 import PresetModalComp from "@/components/PresetModalComp";
 import { ScreenCapture } from "react-screen-capture";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 
 export default function Home() {
@@ -67,7 +68,20 @@ export default function Home() {
   }, [setShirt, setSkirt, setShirtTexture, setSkirtTexture, setRemoveHair, setRemoveShirt, setRemoveSkirt]);
 
 
+// save screenshot
+const saveScreenShot = async () => {
+  if (!imageUrl) {
+    console.error("No image URL available");
+    return;
+  }
 
+  try {
+    const res = await addScreenShots([imageUrl]); 
+    toast.success("სურათი შეინახა წარმატებით")
+  } catch (error) {
+    console.error("Error saving screenshot:", error);
+  }
+};
 
 
   return (
@@ -86,6 +100,8 @@ export default function Home() {
 <div className=" relative z-10">
        
         {imageUrl && (
+          <>
+
           <Image
             src={imageUrl}
             alt="Screenshot"
@@ -93,6 +109,8 @@ export default function Home() {
             height={500}
             style={{ objectFit: "contain" }}
           />
+          <Button variant="outline" onClick = {saveScreenShot}>შეინახე</Button>
+          </>
         )}
       </div>
         

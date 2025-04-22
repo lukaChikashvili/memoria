@@ -2,6 +2,7 @@
 
 import { checkUser } from "@/lib/checkUser";
 import { db } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase";
 
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
@@ -172,9 +173,8 @@ async function fileToBase64(file) {
       console.warn("Skipping invalid image data");
       continue;
     }
-  }
 
-  const base64 = base64Data.split(",")[1];
+    const base64 = base64Data.split(",")[1];
     const imageBuffer = Buffer.from(base64, "base64");
 
     const mimeMatch = base64Data.match(/data:image\/([a-zA-Z0-9]+);/);
@@ -201,9 +201,15 @@ async function fileToBase64(file) {
       throw new Error("No valid images were uploaded");
     }
 
+  }
 
+  
+
+   
+    return imageUrls;
       
     } catch (error) {
-      
+      console.error("Error in addScreenShots:", error);
+    throw new Error(`Failed to add screenshots: ${error.message}`);
     }
   }
