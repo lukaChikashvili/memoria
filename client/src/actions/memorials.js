@@ -16,7 +16,7 @@ async function fileToBase64(file) {
   }
 
 
-
+// add body to db
   export async function addBody({ bodyColor, hair, eye }) {
     const { userId } = await auth();
     if(!userId) throw new Error("Unauthorized");
@@ -63,7 +63,7 @@ async function fileToBase64(file) {
     
   }
 
-
+// get body from db
   export async function getBody() {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
@@ -74,4 +74,51 @@ async function fileToBase64(file) {
     });
   
     return user?.memorials?.[0] ?? null;
+  }
+
+
+// add cloth to db
+  export async function addCloth({ shirt, shirtTexture, skirt, 
+    skirtTexture, removeSkirt, removeShirt, removeHair }) {
+    const { userId } = await auth();
+    if(!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+        where: {
+            clerkUserId: userId
+        }
+    });
+
+    const existingCloth = await db.cloth.findFirst({
+      where: {
+        userId: user.id
+      }
+    });
+
+    if(existingCloth) {
+      const updatedCloth = await db.cloth.update({
+        where: {
+          id: existingBody.id
+        },
+        data: {
+          shirt, shirtTexture, skirt, 
+         skirtTexture, removeSkirt, removeShirt, removeHair
+        },
+      });
+      return { success: true, data: updatedCloth };
+    }else {
+      const newCloth = await db.cloth.create({
+        data: {
+          shirt, shirtTexture, skirt, 
+         skirtTexture, removeSkirt, removeShirt, removeHair,
+          userId: user.id
+        },
+      });
+    
+      return { success: true, data: newCloth };
+
+    }
+
+  
+    
   }
