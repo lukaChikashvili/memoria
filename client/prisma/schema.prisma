@@ -25,6 +25,7 @@ model User {
   updatedAt     DateTime     @updatedAt
   role          UserRole     @default(USER)
  memorials Body[] @relation("Body")
+  cloth  Cloth[]  @relation("Cloth")
 
 }
 
@@ -39,6 +40,20 @@ model Body {
   updatedAt DateTime @updatedAt
 }
 
+model Cloth {
+  id            Int     @id @default(autoincrement())
+  shirt         String?
+  shirtTexture  String?
+  skirt         String?
+  skirtTexture  String?
+
+  removeHair    Boolean @default(false)
+  removeShirt   Boolean @default(false)
+  removeSkirt   Boolean @default(false)
+
+  userId        String  
+  user          User    @relation("Cloth", fields: [userId], references: [id])
+}
 
 
 
