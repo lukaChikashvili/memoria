@@ -2,9 +2,12 @@
 import { getScreenShots } from '@/actions/memorials'
 import React, { useEffect, useState } from 'react'
 
+
+
 const page = () => {
 
     const [screenshots, setScreenshots] = useState([]);
+  
 
 
     useEffect(() => {
@@ -20,6 +23,9 @@ const page = () => {
     
         getScreen();
       }, []); 
+
+     
+      
      
 
   return (
