@@ -9,6 +9,8 @@ import { ThemeContext } from '@/context/ThemeContext'
 import Image from 'next/image'
 import logo from '../assets/logo.png'
 import { ScreenCapture } from 'react-screen-capture'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const Header =  ({ isAdminPage = false}) => {
 
@@ -27,11 +29,17 @@ const Header =  ({ isAdminPage = false}) => {
     const handleScreenCapture = (screenCapture) => {
       setImageUrl(screenCapture); 
     };
+
+    const router = useRouter();
+    const isGalleryPage = router.pathname === "/gallery";
   
   return (
     <div className='w-full flex items-center justify-between px-20 h-36 relative z-10'>
-        <div>
+        <div className='flex items-center gap-4'>
+          <Link href = "/">
           <Image src = {logo} alt = "logo" width = {100} height={100} />
+          </Link>
+          <Button variant = "outline" style={{ backgroundColor: isGalleryPage ? "#3A59D1" : "" }}><Link href = "/gallery">გალერეა</Link></Button>
         </div>
 
         <div className='flex gap-4'>

@@ -5,7 +5,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import * as THREE from 'three'
 
 const Experience = () => {
-    const model = useGLTF('./face.glb');
+
+    const model = useGLTF('/face.glb');
 
     const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, removeSkirt,
         currentPreset, skirtTexture, removeShirt, panty , removePanty, removeHair} = useContext(ThemeContext);
@@ -17,10 +18,10 @@ const Experience = () => {
     const [skirtTextureImg, setSkirtTextureImg] = useState(null);
 
     useEffect(() => {
-        if (shirtTexture.src ) {
+        if (shirtTexture ) {
           const loader = new THREE.TextureLoader();
           loader.load(
-            shirtTexture.src,
+            shirtTexture,
             (texture) => {
               setShirtTextureImg(texture);
             },
@@ -34,10 +35,10 @@ const Experience = () => {
         }
 
 
-        if (skirtTexture.src) {
+        if (skirtTexture) {
           const loader = new THREE.TextureLoader();
           loader.load(
-            skirtTexture.src,
+            skirtTexture,
             (texture) => {
               setSkirtTextureImg(texture);
             },
