@@ -17,7 +17,7 @@ const Experience = () => {
     const [skirtTextureImg, setSkirtTextureImg] = useState(null);
 
     useEffect(() => {
-        if (shirtTexture && shirtTexture.src) {
+        if (shirtTexture.src ) {
           const loader = new THREE.TextureLoader();
           loader.load(
             shirtTexture.src,
@@ -34,7 +34,7 @@ const Experience = () => {
         }
 
 
-        if (skirtTexture && skirtTexture.src) {
+        if (skirtTexture.src) {
           const loader = new THREE.TextureLoader();
           loader.load(
             skirtTexture.src,
@@ -196,45 +196,43 @@ const Experience = () => {
                   }
             }
 
-            if(child.name === "Object_31" ) {
-                // shirt
-                child.material.map = null; 
-                child.material.color.set(shirt); 
-                child.material.needsUpdate = true; 
-               
-            }
-
-            if(child.name === "Object_31" && child.material) {
-                if (shirtTextureImg) {
-                    child.material.map = shirtTextureImg;
-                    child.material.color.set('white');
-                } else {
-                    child.material.map = null;
-                    child.material.color.set(shirt);
-                }
-                child.material.needsUpdate = true;
-            }
-
-            if(child.isMesh && skirt)
-            if(child.name === "Object_39" && child.material) {
-              
-              child.material.map = null; 
-              child.material.color.set(skirt); 
-              child.material.needsUpdate = true; 
-
-           
+            //shirt
+            if (child.name === "Object_31" && child.material) {
+              if (removeShirt) {
+                  child.visible = false;
+              } else {
+                  child.visible = true;
+                  if (shirtTextureImg) {
+                      child.material.map = shirtTextureImg;
+                      child.material.color.set(shirt || 'white');
+                  } else {
+                      child.material.map = null;
+                      child.material.color.set(shirt);
+                  }
+                  child.material.needsUpdate = true;
+              }
           }
 
-          if(child.name === "Object_39" && child.material) {
-            if (skirtTextureImg) {
-                child.material.map = skirtTextureImg;
-                child.material.color.set(skirt);
-            } else {
-                child.material.map = null;
-                child.material.color.set(skirt);
-            }
-            child.material.needsUpdate = true;
-        }
+          //skirt
+            if (child.name === "Object_39" && child.material) {
+              if (removeSkirt) {
+                  child.visible = false;
+              } else {
+                  child.visible = true;
+                  if (skirtTextureImg) {
+                      child.material.map = skirtTextureImg;
+                 
+                  } else {
+                      child.material.map = null;
+                      child.material.color.set(skirt);
+                  }
+                  child.material.needsUpdate = true;
+              }
+          }
+
+
+
+
 
         if(child.isMesh && removeSkirt) {
           if(child.name === "Object_39" && child.material) {
@@ -331,7 +329,7 @@ const Experience = () => {
   return (
 
   <>
-     {currentPreset && <Environment preset = {currentPreset} background />} 
+     
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
     </group>

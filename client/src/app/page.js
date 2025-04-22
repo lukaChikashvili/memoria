@@ -1,21 +1,30 @@
 "use client"
 
-import { getBody } from "@/actions/memorials";
+import { getBody, getCloth } from "@/actions/memorials";
 import BodyModal from "@/components/BodyModal";
 import ClothModal from "@/components/ClothModal";
 import { ThemeContext } from "@/context/ThemeContext";
 import Image from "next/image";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import city from '../assets/city.jpg'
 import forest from '../assets/forest.jpg'
 import apartment from '../assets/apartment.jpg'
 import PresetModalComp from "@/components/PresetModalComp";
+import { ScreenCapture } from "react-screen-capture";
+import { Button } from "@/components/ui/button";
+
 
 export default function Home() {
-  const { bodyModal,setBodyColor, setHair, setEye, 
-          clothModal, setPresetModal, presetModal, currentPreset
+  const { bodyModal,setBodyColor, setHair, setEye, setSkirt, setShirt, setSkirtTexture, setShirtTexture,  
+          clothModal, setPresetModal, presetModal, currentPreset, setRemoveHair,
+           setRemoveShirt, setRemoveSkirt, imageUrl
    } = useContext(ThemeContext);
 
+   // screenshot
+
+   const sectionRef = useRef(null); 
+
+   // get body
   useEffect(() => {
     const fetchBody = async () => {
       try {
@@ -33,8 +42,36 @@ export default function Home() {
     fetchBody();
   }, []);
 
+  // get cloth
+  useEffect(() => {
+    const fetchCloth = async () => {
+      try {
+        const res = await getCloth();
+       
+        if (res) {
+          setSkirt(res.skirt);
+          setShirt(res.shirt);
+          setShirtTexture(res.shirtTexture);
+          setSkirtTexture(res.skirtTexture);
+          setRemoveHair(res.removeHair);
+          setRemoveShirt(res.removeShirt);
+          setRemoveSkirt(res.removeSkirt);
+
+        }
+      } catch (error) {
+        console.error("Failed to fetch body data", error);
+      }
+    };
+  
+    fetchCloth();
+  }, [setShirt, setSkirt, setShirtTexture, setSkirtTexture, setRemoveHair, setRemoveShirt, setRemoveSkirt]);
+
+
+
+
+
   return (
- <section className='r3f-canvas '>
+ <section className='r3f-canvas '  ref={sectionRef}>
      {bodyModal && <BodyModal />}
      {clothModal&& <ClothModal />}
 <div className="w-full absolute z-10 bg-transparent bottom-4 left-350">
@@ -45,6 +82,23 @@ export default function Home() {
 </div>
 
 {presetModal && <PresetModalComp />}
+
+<div className=" relative z-10">
+       
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt="Screenshot"
+            width={500}
+            height={500}
+            style={{ objectFit: "contain" }}
+          />
+        )}
+      </div>
+        
+      
+
+     
  </section>
   );
 }

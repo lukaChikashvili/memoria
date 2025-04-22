@@ -10,7 +10,7 @@ import { Lights } from './Lights'
 export default function BackgroundCanvas() {
   return (
     <div className="canvas-container">
-      <Canvas shadows
+      <Canvas gl={{ preserveDrawingBuffer: true }} shadows
               camera={{ position: [0, 0, 2], fov: 100 }}>
      
       

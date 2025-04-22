@@ -36,6 +36,7 @@ export function ThemeProvider({ children }) {
    const [removeShirt, setRemoveShirt] = useState(false);
    const [removePanty, setRemovePanty] = useState(false);
    const [removeHair, setRemoveHair] = useState(false);
+   const [imageUrl, setImageUrl] = useState(null);
    
    const changePreset = (preset) => {
       setCurrentPreset(preset);
@@ -51,7 +52,7 @@ export function ThemeProvider({ children }) {
     shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal ,
     currentPreset, changePreset, skirt, setSkirt, skirtTexture, setSkirtTexture, 
     removeSkirt, setRemoveSkirt, removeShirt, setRemoveShirt, panty, setPanty, 
-    removePanty, setRemovePanty, removeHair, setRemoveHair}}>
+    removePanty, setRemovePanty, removeHair, setRemoveHair, imageUrl, setImageUrl}}>
       {children}
     </ThemeContext.Provider>
   );

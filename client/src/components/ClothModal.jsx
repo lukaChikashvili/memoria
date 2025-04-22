@@ -10,12 +10,13 @@ import texture4 from '../assets/texture4.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Eye, EyeClosed, Loader2 } from 'lucide-react';
 import { addCloth } from '@/actions/memorials';
+import { toast } from 'sonner';
 
 
 const ClothModal = () => {
 
     const { setSkirt, shirt,shirtTexture, skirt, skirtTexture, setShirtTexture, setShirt, setSkirtTexture, removeSkirt,
-       setRemoveSkirt, removeShirt, setRemoveShirt , setPanty, removePanty, setRemovePanty, removeHair, setRemoveHair} = useContext(ThemeContext);
+       setRemoveSkirt, removeShirt, setRemoveShirt , setClothModal,setPanty, removePanty, setRemovePanty, removeHair, setRemoveHair} = useContext(ThemeContext);
 
     const colors = ['#F7374F', '#F14A00', '#500073', '#1F7D53', '#4B70F5', '#EEEEEE', 
                     '#FEBA17', '#FF2DF1', '#B03052', '#CCDF92', '#8B5DFF', 'black'];
@@ -28,7 +29,10 @@ const ClothModal = () => {
    const saveCloth = async () => {
        try {
         const res = await addCloth({shirt, shirtTexture: shirtTexture.src, skirt, skirtTexture:skirtTexture.src, removeHair, removeShirt, removeSkirt} )
-
+        if(res.success) {
+          toast.success("ცვლილება შეინახა წარმატებით");
+         setClothModal(false);
+        }
        } catch (error) {
           console.log(error)
        }

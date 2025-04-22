@@ -127,4 +127,15 @@ async function fileToBase64(file) {
 
   
     
+  // get cloth from db
+  export async function getCloth() {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
   
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+      include: { cloth: true }
+    });
+  
+    return user?.cloth?.[0] ?? null;
+  }
