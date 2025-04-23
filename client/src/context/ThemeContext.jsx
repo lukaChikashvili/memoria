@@ -22,12 +22,14 @@ export function ThemeProvider({ children }) {
 
    const [presetModal, setPresetModal] = useState(false);
 
-   const [currentPreset, setCurrentPreset] = useState('city');
+   const [currentPreset, setCurrentPreset] = useState(null);
 
    const [skirt, setSkirt] = useState('');
    const [skirtTexture, setSkirtTexture] = useState('');
 
    const [panty, setPanty] = useState('');
+
+   const [feed, setFeed] = useState(false);
 
 
 
@@ -52,7 +54,8 @@ export function ThemeProvider({ children }) {
     shirt, setShirt, shirtTexture, setShirtTexture, presetModal, setPresetModal ,
     currentPreset, changePreset, skirt, setSkirt, skirtTexture, setSkirtTexture, 
     removeSkirt, setRemoveSkirt, removeShirt, setRemoveShirt, panty, setPanty, 
-    removePanty, setRemovePanty, removeHair, setRemoveHair, imageUrl, setImageUrl}}>
+    removePanty, setRemovePanty, removeHair, setRemoveHair, imageUrl, setImageUrl, 
+    feed, setFeed}}>
       {children}
     </ThemeContext.Provider>
   );

@@ -9,7 +9,7 @@ const Experience = () => {
     const model = useGLTF('/face.glb');
 
     const { bodyColor,skirt,  hair, eye, shirt, shirtTexture, removeSkirt,
-        currentPreset, skirtTexture, removeShirt, panty , removePanty, removeHair} = useContext(ThemeContext);
+        currentPreset, skirtTexture, removeShirt, panty , removePanty, removeHair, presetModal} = useContext(ThemeContext);
 
     const irisTexture = useLoader(THREE.TextureLoader, './eye.jpg');
    
@@ -330,7 +330,7 @@ const Experience = () => {
   return (
 
   <>
-     
+     {currentPreset  && <Environment preset={currentPreset} background />}
     <group position={[0, -4, 0]}>
       <primitive object={model.scene} scale = {3} position={[0, 0, 0]}  />
     </group>

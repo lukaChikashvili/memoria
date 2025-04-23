@@ -229,7 +229,7 @@ export async function getScreenShots() {
 }
 
 
-export async function deleteScreenShot() {
+export async function deleteScreenShot(imageUrl) {
 
   const user = await checkUser(); 
 

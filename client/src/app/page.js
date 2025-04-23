@@ -77,7 +77,8 @@ const saveScreenShot = async () => {
 
   try {
     const res = await addScreenShots([imageUrl]); 
-    toast.success("სურათი შეინახა წარმატებით")
+    toast.success("სურათი შეინახა წარმატებით");
+    
   } catch (error) {
     console.error("Error saving screenshot:", error);
   }
@@ -105,11 +106,12 @@ const saveScreenShot = async () => {
           <Image
             src={imageUrl}
             alt="Screenshot"
-            width={500}
-            height={500}
+            width={300}
+            height={300}
+            className="ml-12 rounded-md shadow-lg"
             style={{ objectFit: "contain" }}
           />
-          <Button variant="outline" onClick = {saveScreenShot}>შეინახე</Button>
+          <Button variant="outline" className="ml-12 mt-6 w-[300px] cursor-pointer bg-[#3A59D1] text-white" onClick = {saveScreenShot}>შეინახე</Button>
           </>
         )}
       </div>
