@@ -18,7 +18,7 @@ import { toast } from "sonner";
 export default function Home() {
   const { bodyModal,setBodyColor, setHair, setEye, setSkirt, setShirt, setSkirtTexture, setShirtTexture,  
           clothModal, setPresetModal, presetModal, currentPreset, setRemoveHair,
-           setRemoveShirt, setRemoveSkirt, imageUrl
+           setRemoveShirt, setRemoveSkirt, imageUrl, screenshotModal, setScreenshotModal 
    } = useContext(ThemeContext);
 
    // screenshot
@@ -78,6 +78,9 @@ const saveScreenShot = async () => {
   try {
     const res = await addScreenShots([imageUrl]); 
     toast.success("სურათი შეინახა წარმატებით");
+    setScreenshotModal(false);
+    
+    
     
   } catch (error) {
     console.error("Error saving screenshot:", error);
@@ -100,7 +103,7 @@ const saveScreenShot = async () => {
 
 <div className=" relative z-10 overflow-y-hidden">
        
-        {imageUrl && (
+        {imageUrl && screenshotModal && (
           <>
 
           <Image
@@ -108,7 +111,7 @@ const saveScreenShot = async () => {
             alt="Screenshot"
             width={300}
             height={300}
-            className="ml-12 rounded-md shadow-lg"
+            className="ml-12 rounded-md shadow-lg mt-36 md:mt-0"
             style={{ objectFit: "contain" }}
           />
           <Button variant="outline" className="ml-12 mt-6 w-[300px] cursor-pointer bg-[#3A59D1] text-white" onClick = {saveScreenShot}>შეინახე</Button>

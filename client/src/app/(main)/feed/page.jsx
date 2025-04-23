@@ -1,6 +1,9 @@
 "use client"
 import { getPosts } from '@/actions/memorials'
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
@@ -47,14 +50,20 @@ const page = () => {
 
 
   return (
-    <div className="w-full min-h-screen screen py-20 px-6 sm:px-12 relative z-10 -mt-12">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+    <div className="w-full min-h-screen screen py-20 px-6 sm:px-12 relative mt-12 md:-mt-12 z-[1000]">
+        <Link href = "/">
+        <Button variant = "outline" className=" md:hidden bg-white w-full flex "><ArrowLeft />უკან</Button>
+        </Link> 
+    <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-4  ">
+       
+        
+
       {posts?.map((post, index) => (
         <div
           key={index}
-          className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300"
+          className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 "
         >
-          <div className="relative w-full h-64 mb-4 overflow-hidden rounded-xl">
+          <div className="relative w-full h-64 mb-4 overflow-hidden rounded-xl ">
             <Image
               src={post.imgUrl}
               alt={post.title}

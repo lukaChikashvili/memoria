@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 
 const Header =  ({ isAdminPage = false}) => {
 
-  const { setBodyModal, setImageUrl,bodyModal, clothModal, setClothModal, hair } = useContext(ThemeContext);
+  const { setBodyModal, setImageUrl,bodyModal, clothModal, setClothModal, setScreenshotModal } = useContext(ThemeContext);
 
     const openCloth = () => {
       setClothModal(!clothModal);
@@ -28,6 +28,8 @@ const Header =  ({ isAdminPage = false}) => {
 
     const handleScreenCapture = (screenCapture) => {
       setImageUrl(screenCapture); 
+      setScreenshotModal(true);
+
     };
 
     const router = useRouter();
@@ -40,7 +42,7 @@ const Header =  ({ isAdminPage = false}) => {
         <div className="w-full  items-center justify-between px-20 h-36 hidden md:flex">
           <div className="hidden md:flex items-center gap-4">
             <Link href="/">
-              <Image src={logo} alt="logo" width={100} height={100} />
+              <Image src={logo} alt="logo" width={100} height={100}  className='sm:inline '/>
             </Link>
             <Button
               variant="outline"
@@ -79,7 +81,7 @@ const Header =  ({ isAdminPage = false}) => {
   
               <ScreenCapture onEndCapture={handleScreenCapture}>
                 {({ onStartCapture }) => (
-                  <div>
+                  <div >
                     <Button className="cursor-pointer" variant="outline" onClick={onStartCapture}>
                       <ImageIcon /> სქრინშოტი
                     </Button>
@@ -111,8 +113,8 @@ const Header =  ({ isAdminPage = false}) => {
         </div>
   
       
-        <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg md:hidden ">
-          <div className="flex justify-between items-center py-3 px-6">
+        <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg md:hidden  ">
+          <div className="flex justify-between items-center py-3 px-6 ">
             <Link href="/gallery">
               <Button variant="outline" className="w-12 h-12 rounded-full flex justify-center items-center">
                 <Images size={24} />
@@ -142,6 +144,18 @@ const Header =  ({ isAdminPage = false}) => {
               >
                 <PersonStanding size={24} />
               </Button>
+            </SignedIn>
+
+            <SignedIn>
+            <ScreenCapture onEndCapture={handleScreenCapture}>
+                {({ onStartCapture }) => (
+                  <div >
+                    <Button className="w-12 h-12 rounded-full flex justify-center items-center" variant="outline" onClick={onStartCapture}>
+                      <ImageIcon /> 
+                    </Button>
+                  </div>
+                )}
+              </ScreenCapture>
             </SignedIn>
             <SignedOut>
               <SignInButton forceRedirectUrl="/">

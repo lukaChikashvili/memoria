@@ -8,9 +8,11 @@ import texture2 from '../assets/texture2.png'
 import texture3 from '../assets/texture3.jpg'
 import texture4 from '../assets/texture4.png'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Eye, EyeClosed, Loader2 } from 'lucide-react';
+import { Eye, EyeClosed, EyeOff, Loader2, Shirt } from 'lucide-react';
 import { addCloth } from '@/actions/memorials';
 import { toast } from 'sonner';
+import { Icon } from 'lucide-react';
+import { dress } from '@lucide/lab';
 
 
 const ClothModal = () => {
@@ -40,34 +42,34 @@ const ClothModal = () => {
 
 
   return (
-    <div className='h-screen px-12 relative w-[43rem] '>
+    <div className='h-screen px-0 md:px-12 relative md:w-[43rem] mt-8'>
 
    
-<div className='absolute inset-0 z-10 px-12 flex flex-col gap-6'>
+<div className='absolute inset-0  px-4 md:px-12 flex flex-col gap-6'>
    
-  <Tabs defaultValue = "shirt">
+  <Tabs defaultValue = "shirt" className="z-10">
  
 
-  <TabsList>
-          <TabsTrigger value="shirt">
-          
-            ზედა ტანსაცმელი
-          </TabsTrigger>
-          <TabsTrigger value="skirt">
-          
-            ქვედა ტანსაცმელი
-          </TabsTrigger>
+  <TabsList className="flex flex-wrap justify-center gap-2">
+  <TabsTrigger value="shirt" className="flex items-center gap-2">
+    <Shirt className="h-5 w-5" />
+    <span className="hidden sm:inline">ზედა ტანსაცმელი</span>
+  </TabsTrigger>
 
-          <TabsTrigger value="visibility">
-          
-            გახადე ტანსაცმელი
-          </TabsTrigger>
-        </TabsList>
+  <TabsTrigger value="skirt" className="flex items-center gap-2">
+    <Icon iconNode={dress} />
+    <span className="hidden sm:inline">ქვედა ტანსაცმელი</span>
+  </TabsTrigger>
 
+  <TabsTrigger value="visibility" className="flex items-center gap-2">
+    <EyeOff className="h-5 w-5" />
+    <span className="hidden sm:inline">გახადე ტანსაცმელი</span>
+  </TabsTrigger>
+</TabsList>
 <TabsContent value = "shirt" className="flex flex-col gap-4">
 
 
-    <Card className="relative z-10  ">
+    <Card className="relative z-10 bg-white opacity-80 ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
         <CardDescription>ტოპის ფერი</CardDescription>
@@ -89,7 +91,7 @@ const ClothModal = () => {
  
 
 
-    <Card className="relative z-10  ">
+    <Card className="relative z-10 bg-white opacity-80 ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
         <CardDescription>ტოპის პრინტი</CardDescription>
@@ -101,7 +103,7 @@ const ClothModal = () => {
             <Image key={i} src = {value}
             alt = "image" width = {100} height = {100} 
               onClick={() => setShirtTexture(value)}
-             className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60'
+             className='rounded-md shadow-lg cursor-pointer duration-500 ease hover:opacity-60 w-[50px] md:w-[100px]'
             />
            ))}
         </div>
@@ -110,7 +112,7 @@ const ClothModal = () => {
     </TabsContent>
 
     <TabsContent value = "skirt" className="flex flex-col gap-4">
-    <Card className="relative z-10  ">
+    <Card className="relative z-10 bg-white opacity-80 ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
         <CardDescription>ქვედაბოლოს ფერი</CardDescription>
@@ -131,7 +133,7 @@ const ClothModal = () => {
     </Card>
 
 {!removeSkirt && 
-    <Card className="relative z-10  ">
+    <Card className="relative z-10 bg-white opacity-80 ">
       <CardHeader>
         <CardTitle>შეარჩიეთ ტანსაცმელი</CardTitle>
         <CardDescription>ქვედაბოლოს პრინტი</CardDescription>
@@ -151,7 +153,7 @@ const ClothModal = () => {
     </Card>
 }
 
-    {removeSkirt &&  <Card className="relative z-10  ">
+    {removeSkirt &&  <Card className="relative z-10 bg-white opacity-80 ">
       <CardHeader>
         <CardTitle>საცვალი / ნიფხავი </CardTitle>
         <CardDescription>აარჩიეთ ფერი</CardDescription>
@@ -175,7 +177,7 @@ const ClothModal = () => {
     </TabsContent>
 
     <TabsContent value = "visibility" className="flex flex-col gap-4">
-    <Card className="relative z-10  ">
+    <Card className="relative z-10  bg-white opacity-80">
       <CardHeader>
         <CardTitle>გახადეთ ტანსაცმელი</CardTitle>
         <CardDescription>მოაშორე ზედა</CardDescription>
@@ -196,7 +198,7 @@ const ClothModal = () => {
   
   
     
-    <Button className='bg-[#3A59D1]' onClick = {saveCloth}>შენახვა</Button>
+    <Button className='bg-[#3A59D1] text-white z-10 ' onClick = {saveCloth}>შენახვა</Button>
   </div>
   </div>
   
