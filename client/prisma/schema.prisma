@@ -26,7 +26,8 @@ model User {
   role          UserRole     @default(USER)
  memorials Body[] @relation("Body")
   cloth  Cloth[]  @relation("Cloth")
- screenshots Screenshot[]    
+ screenshots Screenshot[]
+  feeds Feed[]     
 
 }
 
@@ -73,6 +74,8 @@ model Feed {
   description String
   imgUrl      String
   createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 

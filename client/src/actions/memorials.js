@@ -275,28 +275,30 @@ return { success: true, message: "Screenshot deleted successfully." };
 
 
 export async function AddPost({ title, description, imgUrl }) {
-  const user = await checkUser(); 
+  try {
+  
+    const { userId } = await auth();
+    if (!userId) throw new Error('Unauthorized');
 
-  if (!user) {
-    throw new Error("User not found or unauthorized");
+   
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+    if (!user) throw new Error('User not found');
+
+   
+    const post = await db.feed.create({
+      data: {
+        title,
+        description,
+        imgUrl,
+        userId: user.id, 
+      },
+    });
+
+    return { success: true, data: post };
+  } catch (error) {
+    console.error('[AddPost ERROR]', error);
+    throw new Error(`Failed to create post: ${error.message}`);
   }
-
-  if (!title || !description || !imgUrl) {
-    throw new Error("All fields are required")
-  }
-
-
-
-  const post = await db.feed.create({
-    data: {
-      title,
-      description,
-      imgUrl,
-    }
-  });
-
-  revalidatePath('/feed');
-
-  return { success: true, data: post, message: "Screenshot deleted successfully." };
-
 }
