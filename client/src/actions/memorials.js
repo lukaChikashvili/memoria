@@ -307,17 +307,20 @@ export async function AddPost({ title, description, imgUrl }) {
 // get posts
 export async function getPosts() {
   try {
-    const { userId } = await auth();
-    if (!userId) throw new Error("Unauthorized");
-
-    const user = await db.user.findUnique({
-      where: { clerkUserId: userId },
-      include: { feeds: true }, 
+    const posts = await db.feed.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: {
+          select: {
+            id: true,
+            clerkUserId: true,
+            name: true, 
+          },
+        },
+      },
     });
 
-    if (!user) throw new Error("User not found");
-
-    return user.feeds; 
+    return posts;
   } catch (error) {
     console.error("[getPosts ERROR]", error);
     throw new Error(`Failed to fetch posts: ${error.message}`);

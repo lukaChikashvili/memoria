@@ -39,76 +39,73 @@ const BodyModal = () => {
 
     
   return (
-    <div className='h-screen px-12 relative w-[43rem] '>
+    <div className="h-screen w-full md:w-1/2 -mt-8 px-4 sm:px-8 md:px-12 relative -z-10 flex justify-center items-start overflow-y-auto z-10">
+    <div className="w-full max-w-4xl pt-8 space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>მთლიანი სხეული</CardTitle>
+          <CardDescription>შეცვალეთ სხეულის ფერი</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 sm:gap-4">
+            {colors.map((color) => (
+              <Button
+                key={color}
+                onClick={() => setBodyColor(color)}
+                className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-  <div className='absolute inset-0 z-10 px-12 flex flex-col gap-6'>
- 
- 
+      <Card>
+        <CardHeader>
+          <CardTitle>თმის ფერი</CardTitle>
+          <CardDescription>შეცვალეთ თმის ფერი</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 sm:gap-4">
+            {haircolors.map((color) => (
+              <Button
+                key={color}
+                onClick={() => setHair(color)}
+                className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-  <Card className="relative z-10 -mt-8">
-    <CardHeader>
-      <CardTitle>მთლიანი სხეული</CardTitle>
-      <CardDescription>შეცვალეთ სხეულის ფერი</CardDescription>
-    </CardHeader>
+      <Card>
+        <CardHeader>
+          <CardTitle>თვალის ფერი</CardTitle>
+          <CardDescription>შეცვალეთ თვალის ფერი</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 sm:gap-4">
+            {eyecolor.map((color) => (
+              <Button
+                key={color}
+                onClick={() => setEye(color)}
+                className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
+                style={{ backgroundColor: color }}
+              />
+            ))}
+          </div>
+        </CardContent>
 
-    <CardContent>
-      <div className='flex gap-4'>
-        {colors.map((color) => (
-          <Button
-            key={color}
-            onClick={() => setBodyColor(color)}
-            className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
-            style={{ backgroundColor: color }}
-          />
-        ))}
+        
+      </Card>
+      <div className="flex ">
+        <Button className="bg-[#3A59D1] text-white" onClick={saveBody}>შენახვა</Button>
       </div>
-    </CardContent>
-  </Card>
+     
+    </div>
+  </div>
 
-
-  <Card className="relative z-10">
-    <CardHeader>
-      <CardTitle>თმის ფერი</CardTitle>
-      <CardDescription>შეცვალეთ თმის ფერი</CardDescription>
-    </CardHeader>
-
-    <CardContent>
-      <div className='flex gap-4 flex-wrap'>
-        {haircolors.map((color) => (
-          <Button
-            key={color}
-            onClick={() => setHair(color)}
-            className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
-            style={{ backgroundColor: color }}
-          />
-        ))}
-      </div>
-    </CardContent>
-  </Card>
-
-  <Card className="relative z-10">
-    <CardHeader>
-      <CardTitle>თვალის ფერი</CardTitle>
-      <CardDescription>შეცვალეთ თვალის ფერი</CardDescription>
-    </CardHeader>
-
-    <CardContent>
-      <div className='flex gap-4 flex-wrap'>
-        {eyecolor.map((color) => (
-          <Button
-            key={color}
-            onClick={() => setEye(color)}
-            className="w-8 h-8 rounded-lg cursor-pointer hover:border-white"
-            style={{ backgroundColor: color }}
-          />
-        ))}
-      </div>
-    </CardContent>
-  </Card>
-
-  <Button className="bg-[#3A59D1] " onClick = {saveBody}>შენახვა</Button>
-</div>
-</div>
 
   )
 }

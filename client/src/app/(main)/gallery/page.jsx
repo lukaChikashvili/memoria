@@ -53,7 +53,7 @@ const page = () => {
 
   return (
     <div className='w-full  min-h-screen relative z-10 -mt-12 px-12 screen'>
-    <div className="flex flex-wrap justify-center gap-4 ">
+    <div className="flex flex-wrap justify-center gap-8 ">
       {screenshots.length > 0 ? (
         screenshots.map((url, index) => (
           <div key={index} className="mt-12 ">

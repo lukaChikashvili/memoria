@@ -98,7 +98,7 @@ const saveScreenShot = async () => {
 
 {presetModal && <PresetModalComp />}
 
-<div className=" relative z-10">
+<div className=" relative z-10 overflow-y-hidden">
        
         {imageUrl && (
           <>
