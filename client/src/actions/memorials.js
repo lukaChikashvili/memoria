@@ -272,3 +272,31 @@ await db.screenshot.delete({
 return { success: true, message: "Screenshot deleted successfully." };
 
 } 
+
+
+export async function AddPost({ title, description, imgUrl }) {
+  const user = await checkUser(); 
+
+  if (!user) {
+    throw new Error("User not found or unauthorized");
+  }
+
+  if (!title || !description || !imgUrl) {
+    throw new Error("All fields are required")
+  }
+
+
+
+  const post = await db.feed.create({
+    data: {
+      title,
+      description,
+      imgUrl,
+    }
+  });
+
+  revalidatePath('/feed');
+
+  return { success: true, data: post, message: "Screenshot deleted successfully." };
+
+}

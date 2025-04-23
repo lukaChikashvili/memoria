@@ -14,9 +14,9 @@ const page = () => {
 
     const [screenshots, setScreenshots] = useState([]);
   
-    const { setFeed, feed } = useContext(ThemeContext);
+    const { setFeed, feed, setSelectedImage } = useContext(ThemeContext);
 
-    const router = useRouter();
+   
 
     useEffect(() => {
        
@@ -44,7 +44,8 @@ const page = () => {
       };
 
 
-      const publishScreenshot = () => {
+      const publishScreenshot = (url) => {
+        setSelectedImage(url);
          setFeed(true);
       }
       
@@ -69,7 +70,8 @@ const page = () => {
 />      წაშლა
             </Button>
                    
-         <Button className="bg-[#3A59D1] text-white  mt-4 cursor-pointer shadow-lg duration-500 ease hover:bg-blue-400" onClick = {publishScreenshot}>გამოქვეყნება</Button>
+         <Button className="bg-[#3A59D1] text-white  mt-4 cursor-pointer shadow-lg duration-500 ease hover:bg-blue-400" 
+         onClick = {() => publishScreenshot(url)}>გამოქვეყნება</Button>
               </div>
           </div>
         ))

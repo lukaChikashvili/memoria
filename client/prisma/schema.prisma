@@ -67,6 +67,14 @@ model Cloth {
 }
 
 
+model Feed {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imgUrl      String
+  createdAt   DateTime @default(now())
+}
+
 
 enum UserRole {
   USER

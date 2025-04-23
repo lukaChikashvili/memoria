@@ -45,6 +45,8 @@ export function ThemeProvider({ children }) {
 
    }
 
+   const [selectedImage, setSelectedImage] = useState('');
+
 
  
 
@@ -55,7 +57,7 @@ export function ThemeProvider({ children }) {
     currentPreset, changePreset, skirt, setSkirt, skirtTexture, setSkirtTexture, 
     removeSkirt, setRemoveSkirt, removeShirt, setRemoveShirt, panty, setPanty, 
     removePanty, setRemovePanty, removeHair, setRemoveHair, imageUrl, setImageUrl, 
-    feed, setFeed}}>
+    feed, setFeed, selectedImage, setSelectedImage}}>
       {children}
     </ThemeContext.Provider>
   );
