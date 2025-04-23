@@ -39,7 +39,7 @@ const BodyModal = () => {
 
     
   return (
-    <div className="h-screen w-full md:w-1/2 -mt-8 px-4 sm:px-8 md:px-12 relative -z-10 flex justify-center items-start overflow-y-auto z-10">
+    <div className="h-screen w-full md:w-1/2 -mt-8 px-4 sm:px-8 md:px-12 relative z-10 flex justify-center items-start overflow-y-auto ">
     <div className="w-full max-w-4xl pt-8 space-y-6">
       <Card>
         <CardHeader>
