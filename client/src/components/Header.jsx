@@ -113,7 +113,7 @@ const Header =  ({ isAdminPage = false}) => {
         </div>
   
       
-        <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg md:hidden  ">
+        <div className="fixed bottom-0 left-0 w-full bg-white shadow-lg md:hidden z-50 ">
           <div className="flex justify-between items-center py-3 px-6 ">
             <Link href="/gallery">
               <Button variant="outline" className="w-12 h-12 rounded-full flex justify-center items-center">
