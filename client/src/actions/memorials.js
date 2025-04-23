@@ -273,7 +273,7 @@ return { success: true, message: "Screenshot deleted successfully." };
 
 } 
 
-
+// creating posts
 export async function AddPost({ title, description, imgUrl }) {
   try {
   
@@ -300,5 +300,26 @@ export async function AddPost({ title, description, imgUrl }) {
   } catch (error) {
     console.error('[AddPost ERROR]', error);
     throw new Error(`Failed to create post: ${error.message}`);
+  }
+}
+
+
+// get posts
+export async function getPosts() {
+  try {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+      include: { feeds: true }, 
+    });
+
+    if (!user) throw new Error("User not found");
+
+    return user.feeds; 
+  } catch (error) {
+    console.error("[getPosts ERROR]", error);
+    throw new Error(`Failed to fetch posts: ${error.message}`);
   }
 }

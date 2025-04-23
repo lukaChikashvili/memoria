@@ -52,11 +52,11 @@ const page = () => {
      
 
   return (
-    <div className='w-full  h-screen relative z-10 -mt-12 px-12 screen'>
-    <div className="flex flex-wrap justify-center">
+    <div className='w-full  min-h-screen relative z-10 -mt-12 px-12 screen'>
+    <div className="flex flex-wrap justify-center gap-4 ">
       {screenshots.length > 0 ? (
         screenshots.map((url, index) => (
-          <div key={index} className="m-4">
+          <div key={index} className="mt-12 ">
             <img 
               src={url} 
               alt={`Screenshot ${index + 1}`} 

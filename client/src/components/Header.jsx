@@ -3,7 +3,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 import React, { useContext } from 'react'
 import { Button } from './ui/button'
-import { ImageIcon, LogIn, PersonStanding, Shirt } from 'lucide-react'
+import { ImageIcon, Images, LogIn, MessageCircle, PersonStanding, Shirt } from 'lucide-react'
 
 import { ThemeContext } from '@/context/ThemeContext'
 import Image from 'next/image'
@@ -39,7 +39,8 @@ const Header =  ({ isAdminPage = false}) => {
           <Link href = "/">
           <Image src = {logo} alt = "logo" width = {100} height={100} />
           </Link>
-          <Button variant = "outline" style={{ backgroundColor: isGalleryPage ? "#3A59D1" : "" }}><Link href = "/gallery">გალერეა</Link></Button>
+          <Button variant = "outline" style={{ backgroundColor: isGalleryPage ? "#3A59D1" : "" }} className="flex items-center "><Link href = "/gallery" className='flex items-center gap-2'> <Images /> გალერეა</Link></Button>
+          <Button variant = "outline" ><Link href = "/feed" className='flex items-center gap-2'><MessageCircle /> პოსტები</Link></Button>
         </div>
 
         <div className='flex gap-4'>
