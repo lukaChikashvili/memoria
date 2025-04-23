@@ -29,7 +29,7 @@ const page = () => {
      
 
   return (
-    <div className='w-full bg-white  h-screen relative z-10 -mt-12'>
+    <div className='w-full bg-white  h-screen relative z-10 -mt-12 px-12 screen'>
     <div className="flex flex-wrap justify-center">
       {screenshots.length > 0 ? (
         screenshots.map((url, index) => (

@@ -227,3 +227,48 @@ export async function getScreenShots() {
 
   return user.screenshots.map((screenshot) => screenshot.url); 
 }
+
+
+export async function deleteScreenShot() {
+
+  const user = await checkUser(); 
+
+if (!user) {
+  throw new Error("User not found or unauthorized");
+}
+
+const screenshot = await db.screenshot.findFirst({
+  where: {
+    url: imageUrl,
+    userId: user.id,
+  },
+});
+
+if (!screenshot) {
+  throw new Error("Screenshot not found");
+}
+
+const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/memoria-images/`;
+const filePath = imageUrl.replace(baseUrl, "");
+
+const cookieStore = await cookies();
+const supabase = createClient(cookieStore);
+
+const { error: storageError } = await supabase.storage
+  .from("memoria-images")
+  .remove([filePath]);
+
+if (storageError) {
+  console.error("Error deleting from Supabase Storage:", storageError);
+  throw new Error(`Storage deletion failed: ${storageError.message}`);
+}
+
+await db.screenshot.delete({
+  where: {
+    id: screenshot.id,
+  },
+});
+
+return { success: true, message: "Screenshot deleted successfully." };
+
+} 
