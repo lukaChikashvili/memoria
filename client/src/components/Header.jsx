@@ -11,6 +11,7 @@ import logo from '../assets/logo.png'
 import { ScreenCapture } from 'react-screen-capture'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const Header =  ({ isAdminPage = false}) => {
 
@@ -31,6 +32,10 @@ const Header =  ({ isAdminPage = false}) => {
       setScreenshotModal(true);
 
     };
+
+    function isMobileDevice() {
+      return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    }
 
     const router = useRouter();
     const isGalleryPage = router.pathname === "/gallery";
@@ -82,7 +87,13 @@ const Header =  ({ isAdminPage = false}) => {
               <ScreenCapture onEndCapture={handleScreenCapture}>
                 {({ onStartCapture }) => (
                   <div >
-                    <Button className="cursor-pointer" variant="outline" onClick={onStartCapture}>
+                    <Button className="cursor-pointer" variant="outline"  onClick={() => {
+          if (isMobileDevice()) {
+            toast.warning("სქრინშოტის გადაღება შესაძლებელია მხოლოდ დესკტოპ ვერსიიდან 😊");
+          } else {
+            onStartCapture();
+          }
+        }}>
                       <ImageIcon /> სქრინშოტი
                     </Button>
                   </div>
