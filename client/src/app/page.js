@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 
+
 export default function Home() {
   const { bodyModal,setBodyColor, setHair, setEye, setSkirt, setShirt, setSkirtTexture, setShirtTexture,  
           clothModal, setPresetModal, presetModal, currentPreset, setRemoveHair,
@@ -48,6 +49,7 @@ export default function Home() {
     const fetchCloth = async () => {
       try {
         const res = await getCloth();
+        
        
         if (res) {
           setSkirt(res.skirt);
@@ -65,7 +67,7 @@ export default function Home() {
     };
   
     fetchCloth();
-  }, [setShirt, setSkirt, setShirtTexture, setSkirtTexture, setRemoveHair, setRemoveShirt, setRemoveSkirt]);
+  }, [setShirt, setSkirt, setShirtTexture, setSkirtTexture, setRemoveHair, setRemoveShirt, setRemoveSkirt, ]);
 
 
 // save screenshot
@@ -89,15 +91,10 @@ const saveScreenShot = async () => {
 
 
   return (
- <section className='r3f-canvas px-4 md:px-8 py-8 '  ref={sectionRef}>
+ <section className='r3f-canvas px-4 md:px-8  '  ref={sectionRef}>
      {bodyModal && <BodyModal />}
      {clothModal&& <ClothModal />}
-<div className="w-full absolute z-10 bg-transparent hidden md:inline bottom-4">
-     <div>
-       <Image onClick={() => setPresetModal(!presetModal)} src = {currentPreset === "city" ? 
-          city : currentPreset === "forest" ? forest : currentPreset === "apartment" ? apartment : city} alt = "city" width = {70} height = {80} className="rounded-xl shadow-lg cursor-pointer" />
-     </div>
-</div>
+
 
 {presetModal && <PresetModalComp />}
 

@@ -29,16 +29,18 @@ const ClothModal = () => {
 
    // save cloth 
    const saveCloth = async () => {
-       try {
-        const res = await addCloth({shirt, shirtTexture, skirt, skirtTexture, removeHair, removeShirt, removeSkirt} )
-        if(res.success) {
-          toast.success("ცვლილება შეინახა წარმატებით");
-         setClothModal(false);
-        }
-       } catch (error) {
-          console.log(error)
-       }
-   }
+    try {
+     const res = await addCloth({shirt, shirtTexture:shirtTexture.src, skirt,
+       skirtTexture:skirtTexture.src, removeHair, removeShirt, removeSkirt} )
+     if(res.success) {
+       toast.success("ცვლილება შეინახა წარმატებით");
+      setClothModal(false);
+     }
+    } catch (error) {
+       console.log(error)
+    }
+}
+
 
 
   return (

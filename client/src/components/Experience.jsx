@@ -18,10 +18,10 @@ const Experience = () => {
     const [skirtTextureImg, setSkirtTextureImg] = useState(null);
 
     useEffect(() => {
-        if (shirtTexture ) {
+        if (shirtTexture.src ) {
           const loader = new THREE.TextureLoader();
           loader.load(
-            shirtTexture,
+            shirtTexture.src,
             (texture) => {
               setShirtTextureImg(texture);
             },
@@ -35,10 +35,10 @@ const Experience = () => {
         }
 
 
-        if (skirtTexture) {
+        if (skirtTexture.src) {
           const loader = new THREE.TextureLoader();
           loader.load(
-            skirtTexture,
+            skirtTexture.src,
             (texture) => {
               setSkirtTextureImg(texture);
             },

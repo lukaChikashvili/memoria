@@ -71,51 +71,52 @@ export async function addBody({ bodyColor, hair, eye }) {
 
 
 // add cloth to db
-  export async function addCloth({ shirt, shirtTexture, skirt, 
-    skirtTexture, removeSkirt, removeShirt, removeHair }) {
-      const user = await checkUser(); 
+export async function addCloth({ shirt, shirtTexture, skirt, 
+  skirtTexture, removeSkirt, removeShirt, removeHair }) {
+    const user = await checkUser(); 
 
-      if (!user) {
-        throw new Error("User not found or unauthorized");
-      }
+    if (!user) {
+      throw new Error("User not found or unauthorized");
+    }
 
-   
+ 
 
-    
-    const existingCloth = await db.cloth.findFirst({
+  
+  const existingCloth = await db.cloth.findFirst({
+    where: {
+      userId: user.id
+    }
+  });
+
+  if(existingCloth) {
+    const updatedCloth = await db.cloth.update({
       where: {
+        id: existingCloth.id
+      },
+      data: {
+        shirt, shirtTexture, skirt, 
+        skirtTexture, removeSkirt, removeShirt, removeHair,
+      },
+    });
+    return { success: true, data: updatedCloth };
+
+  }else {
+  
+    const newCloth = await db.cloth.create({
+      data: {
+        shirt, shirtTexture, skirt, 
+       skirtTexture, removeSkirt, removeShirt, removeHair,
         userId: user.id
-      }
+      },
     });
 
-    if(existingCloth) {
-      const updatedCloth = await db.cloth.update({
-        where: {
-          id: existingCloth.id
-        },
-        data: {
-          shirt, shirtTexture, skirt, 
-          skirtTexture, removeSkirt, removeShirt, removeHair,
-        },
-      });
-      return { success: true, data: updatedCloth };
-
-    }else {
-    
-      const newCloth = await db.cloth.create({
-        data: {
-          shirt, shirtTexture, skirt, 
-         skirtTexture, removeSkirt, removeShirt, removeHair,
-          userId: user.id
-        },
-      });
-
-      return { success: true, data: newCloth };
-    }
+    return { success: true, data: newCloth };
+  }
 
 
-    
-    }
+  
+  }
+
 
   
     
