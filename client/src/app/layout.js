@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
        <ThemeProvider>
    
         <Header />
-        <main className="min-h-screen">
+        <main className="">
           <BackgroundCanvas />
         {children}
       
