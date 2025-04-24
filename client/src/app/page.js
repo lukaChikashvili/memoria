@@ -89,10 +89,10 @@ const saveScreenShot = async () => {
 
 
   return (
- <section className='r3f-canvas '  ref={sectionRef}>
+ <section className='r3f-canvas px-4 md:px-8 py-8 '  ref={sectionRef}>
      {bodyModal && <BodyModal />}
      {clothModal&& <ClothModal />}
-<div className="w-full absolute z-10 bg-transparent bottom-4 left-350">
+<div className="w-full absolute z-10 bg-transparent hidden md:inline bottom-4">
      <div>
        <Image onClick={() => setPresetModal(!presetModal)} src = {currentPreset === "city" ? 
           city : currentPreset === "forest" ? forest : currentPreset === "apartment" ? apartment : city} alt = "city" width = {70} height = {80} className="rounded-xl shadow-lg cursor-pointer" />
